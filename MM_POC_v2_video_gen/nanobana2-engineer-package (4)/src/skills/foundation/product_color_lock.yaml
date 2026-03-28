@@ -1,0 +1,22 @@
+skill_name: product_color_lock
+version: 1.0
+
+fragments:
+  default: |
+    <product_color_lock>
+    Color Fidelity: Reproduce the product's colors exactly as shown in the reference images.
+    Do not shift, reinterpret, or "improve" product colors based on the scene lighting or composition.
+    Product color is a brand asset — it must match the reference photograph precisely.
+    Allowed: physically correct specular highlights and shadows on product surfaces.
+    Forbidden: color drift, color variant substitution, desaturation, or any departure from reference colors.
+    </product_color_lock>
+
+  strict: |
+    <product_color_lock>
+    ABSOLUTE COLOR LOCK: The product's exact color from the reference image is non-negotiable.
+    This product may exist in many color variants — you MUST reproduce the specific variant shown in the reference.
+    Do not substitute a different color variant even if it appears to "fit" the scene better.
+    The reference image color is ground truth. Zero tolerance for any color deviation.
+    If a color anchor is provided (e.g., "exact colors: teal, slate-blue"), treat those values as hard constraints.
+    Specular highlights and shadows are permitted only if they preserve the underlying hue identity.
+    </product_color_lock>

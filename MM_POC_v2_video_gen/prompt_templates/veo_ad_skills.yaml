@@ -1,0 +1,27 @@
+- slug: shot_formula
+  label: "Shot Formula"
+  hint: "Build each clip as one self-contained shot. Front-load the most important details in this order: subject, framing, action, context, and style."
+
+- slug: image_to_video_consistency
+  label: "Image-to-Video Consistency"
+  hint: "Treat the input image as authoritative for character, product, wardrobe, and scene layout. Use the prompt mainly to direct motion, camera, and audio without redesigning the frame."
+
+- slug: ad_focus
+  label: "Ad Focus"
+  hint: "Keep the scene simple and product-led. Use low-to-moderate scene complexity so the hero action and branded asset stay readable."
+
+- slug: camera_language
+  label: "Camera Language"
+  hint: "State shot size, camera angle, and movement explicitly. Put camera movement in its own sentence when it matters for the ad beat."
+
+- slug: audio_and_dialogue
+  label: "Audio And Dialogue"
+  hint: "If the shot includes speech, give one complete spoken beat that can finish within the clip. Use clear dialogue, ambience, and SFX only when they support the ad moment."
+
+- slug: timed_beats
+  label: "Timed Beats"
+  hint: "For multi-shot ads, think in short timed beats. Each generated clip should cover one clean beat rather than a whole sequence of events."
+
+- slug: negative_guidance
+  label: "Negative Guidance"
+  hint: "Prefer positive constraints over vague negatives: describe the desired clean frame, stable background, and realistic motion rather than listing many forbidden artifacts."

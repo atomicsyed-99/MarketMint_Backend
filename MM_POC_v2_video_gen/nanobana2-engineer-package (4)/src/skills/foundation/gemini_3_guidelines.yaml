@@ -1,0 +1,16 @@
+name: gemini_3_guidelines
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    Follow these Gemini 3 Pro Image best practices:
+    1. **Be direct and concise** - Gemini 3 prefers short, clear instructions over verbose prompts
+    2. **Use natural language** - Write like you're briefing a human artist, not keyword stuffing
+    3. **Structure: Subject → Action → Context → Constraints** - Clear flow
+    4. **Place negative constraints at the END** - Per Google's Gemini 3 guidelines, negative constraints work best at the end of prompts
+    5. **No over-prompting** - Don't use "4k, masterpiece, trending" spam. Be descriptive, not repetitive.
+    6. **Explicitly label images** - Reference images by their distinctive features, not just "Image 1/2"
+
+  concise: |
+    Concise natural language. Subject → Action → Context → Constraints order.
+    Negative constraints go LAST. No keyword spam. Label images by distinctive features.

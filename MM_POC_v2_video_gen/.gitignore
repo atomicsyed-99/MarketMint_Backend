@@ -1,0 +1,39 @@
+# Generated run outputs (videos, keyframes, storyboards, cost estimates)
+runs/
+
+# Generated frames and scene videos
+ad_frames/
+
+# Generated output directory
+output_ad/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Linter / tool caches
+.ruff_cache/
+.claude/
+
+# Tests (not required for pipeline operation)
+tests/
+
+# Mock file (depends on main backend app.* imports)
+video_gen_grok_mock.py
+
+# Loose media files at root level
+*.mp4
+*.zip
+
+# Virtual environment and build artifacts inside nanobana2 package
+nanobana2-engineer-package (4)/.venv/
+nanobana2-engineer-package (4)/src/nanobana2.egg-info/
+
+# Asset images (user-provided, not part of the pipeline code)
+asset_image/
+
+# Music files (user-provided)
+music/
+
+# Environment files
+.env

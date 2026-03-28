@@ -1,0 +1,205 @@
+# Action catalog for video scene micro-actions
+# Each action is a predefined, achievable motion within a single continuous shot.
+# Actions are paired with starting poses from poses.yaml and camera techniques.
+#
+# CONSTRAINTS these actions respect:
+# - Single continuous shot (no cuts or transitions)
+# - 2-8 seconds duration
+# - No clothing/appearance changes mid-shot
+# - Physically natural human motion only
+#
+# MOTION CATEGORIES (each scene should use a different category to ensure visual variety):
+#   locomotion        — forward movement, walking, pausing
+#   garment_interaction — touching, adjusting, smoothing clothing/fabric
+#   body_movement     — twirls, turns, rotational motion
+#   expression        — facial/hair gestures, emotional beats
+#   static_pose       — minimal motion, breathing, leaning
+#   product_focus     — inspecting, holding up, demonstrating product
+#   talking           — speaking to camera, presenting
+#   lifestyle_action  — everyday activities (sipping, phone, driving)
+
+talking:
+  - slug: talk_to_camera
+    label: "Talk to Camera"
+    category: talking
+    motion_prompt: "Subject speaks directly to camera with natural head movements, subtle hand gestures near chest level, engaged and animated facial expressions, slight body weight shifts"
+    duration_range: [3, 6]
+    scene_types: [creator_hook, creator_cta, product_reveal]
+    camera_pairing: handheld
+    starting_pose: sitting_leaning_forward
+
+  - slug: excited_present
+    label: "Excited Presentation"
+    category: talking
+    motion_prompt: "Subject faces camera with bright energy, hands gesture outward to emphasize points, eyebrows raise for emphasis, slight forward lean, natural smile breaks through"
+    duration_range: [3, 5]
+    scene_types: [creator_hook, product_reveal, creator_cta]
+    camera_pairing: handheld
+    starting_pose: standing_confident
+
+  - slug: nod_and_point
+    label: "Nod and Point Down"
+    category: talking
+    motion_prompt: "Subject nods twice with natural head motion, then right hand rises to chest level and points downward toward lower third of frame, maintaining eye contact with camera, warm smile"
+    duration_range: [3, 5]
+    scene_types: [creator_cta, brand_cta]
+    camera_pairing: static
+    starting_pose: standing_confident
+
+product_showcase:
+  - slug: hold_product_up
+    label: "Hold Product Up to Camera"
+    category: product_focus
+    motion_prompt: "Subject lifts product toward camera with both hands, turning it slightly to show different angles, fingers highlight key details, face visible behind product with proud expression"
+    duration_range: [3, 6]
+    scene_types: [product_reveal, product_demo, creator_hook]
+    camera_pairing: handheld
+    starting_pose: standing_confident
+
+  - slug: fabric_touch
+    label: "Touch and Feel Fabric"
+    category: garment_interaction
+    motion_prompt: "Hands hold fabric close to camera, fingers gently trace along embroidery or texture details, slight fabric movement to show drape and weight, natural hand movements"
+    duration_range: [3, 5]
+    scene_types: [product_reveal, product_demo]
+    camera_pairing: handheld
+    starting_pose: pov_fabric_close_up
+
+  - slug: product_inspect
+    label: "Inspect Product Detail"
+    category: product_focus
+    motion_prompt: "Subject holds product at mid-chest level, tilts it to catch light, one hand points to a specific feature, gaze shifts between the product and a natural off-camera focus"
+    duration_range: [3, 6]
+    scene_types: [product_reveal, product_demo]
+    camera_pairing: dolly_in
+    starting_pose: pre_product_pickup
+
+  - slug: wear_and_adjust
+    label: "Wear and Adjust Outfit"
+    category: garment_interaction
+    motion_prompt: "Subject smooths fabric on torso with one hand, adjusts collar or sleeve, then steps back slightly to show full outfit, natural self-conscious smile"
+    duration_range: [3, 6]
+    scene_types: [product_demo, product_reveal]
+    camera_pairing: static
+    starting_pose: standing_confident
+
+movement:
+  - slug: walk_forward
+    label: "Walk Forward"
+    category: locomotion
+    motion_prompt: "Subject walks forward with natural gait, weight shifts left-right, arms swing in opposition to legs, slight forward lean at torso, relaxed candid pace"
+    duration_range: [3, 6]
+    scene_types: [lifestyle_moment, ambient_establishing, product_in_context]
+    camera_pairing: tracking
+    starting_pose: walk_start_left_foot
+
+  - slug: walk_and_pause
+    label: "Walk Then Pause"
+    category: locomotion
+    motion_prompt: "Subject walks forward 3-4 steps with natural gait, then gradually slows, weight settles on both feet, arms come to rest, body straightens, gaze lifts ahead"
+    duration_range: [4, 7]
+    scene_types: [lifestyle_moment, ambient_establishing]
+    camera_pairing: tracking
+    starting_pose: walk_start_right_foot
+
+  - slug: gentle_twirl
+    label: "Gentle Twirl"
+    category: body_movement
+    motion_prompt: "Subject pivots on one foot for a slow 360-degree turn, arms lift slightly from sides allowing fabric to flare gently, ends in a relaxed three-quarter pose with a natural smile"
+    duration_range: [3, 5]
+    scene_types: [product_demo, lifestyle_moment]
+    camera_pairing: static
+    starting_pose: pre_twirl
+
+  - slug: over_shoulder_turn
+    label: "Look Over Shoulder"
+    category: body_movement
+    motion_prompt: "Subject stands with back partially to camera, slowly turns head to look over shoulder with a soft smile, slight torso rotation follows, showing back detail of outfit"
+    duration_range: [3, 5]
+    scene_types: [product_reveal, lifestyle_moment, brand_cta]
+    camera_pairing: orbit
+    starting_pose: about_to_turn
+
+reactions:
+  - slug: look_up_smile
+    label: "Look Up and Smile"
+    category: expression
+    motion_prompt: "Subject lifts chin smoothly, neck extends, gaze shifts upward, genuine smile forms, shoulders relax back, subtle wonder in expression"
+    duration_range: [3, 5]
+    scene_types: [lifestyle_moment, ambient_establishing, brand_cta]
+    camera_pairing: low_angle_tilt_up
+    starting_pose: pre_look_up
+
+  - slug: hair_touch
+    label: "Touch Hair"
+    category: expression
+    motion_prompt: "One hand rises to touch or tuck hair behind ear, head tilts gently toward the hand, soft natural expression, weight shifts to one foot"
+    duration_range: [3, 5]
+    scene_types: [lifestyle_moment, brand_cta]
+    camera_pairing: dolly_in
+    starting_pose: pre_hair_touch
+
+  - slug: wave_hello
+    label: "Wave Hello"
+    category: talking
+    motion_prompt: "Subject raises one hand in a casual friendly wave, fingers spread naturally, warm smile directed at camera, slight head tilt"
+    duration_range: [2, 4]
+    scene_types: [creator_hook, creator_cta]
+    camera_pairing: handheld
+    starting_pose: standing_confident
+
+static_poses:
+  - slug: confident_stand
+    label: "Confident Stance (Minimal Motion)"
+    category: static_pose
+    motion_prompt: "Subject holds a confident standing pose with subtle weight shifts, gentle breathing motion in torso, micro-movements in hands and facial expression, wind gently moves hair and fabric"
+    duration_range: [3, 8]
+    scene_types: [brand_cta, product_in_context, ambient_establishing]
+    camera_pairing: dolly_in
+    starting_pose: standing_confident
+
+  - slug: relaxed_lean
+    label: "Relaxed Lean (Minimal Motion)"
+    category: static_pose
+    motion_prompt: "Subject settles into a relaxed asymmetrical standing pose with most weight on one side, subtle breathing and micro-movements, relaxed natural expression with occasional gentle shifts in weight and gaze"
+    duration_range: [3, 8]
+    scene_types: [lifestyle_moment, creator_cta, ambient_establishing]
+    camera_pairing: dolly_in
+    starting_pose: standing_relaxed_lean
+
+  - slug: seated_casual
+    label: "Seated Casual (Minimal Motion)"
+    category: static_pose
+    motion_prompt: "Subject sits comfortably with gentle breathing motion, occasional small shifts in posture, natural micro-expressions, relaxed and approachable energy"
+    duration_range: [3, 6]
+    scene_types: [creator_hook, creator_cta, lifestyle_moment]
+    camera_pairing: static
+    starting_pose: sitting_cross_legged
+
+lifestyle:
+  - slug: sip_drink
+    label: "Take a Sip"
+    category: lifestyle_action
+    motion_prompt: "Subject lifts cup toward lips, takes a gentle sip, lowers cup, soft content expression, eyes close briefly during sip then reopen"
+    duration_range: [3, 5]
+    scene_types: [lifestyle_moment, product_in_context, everyday_use_moment]
+    camera_pairing: static
+    starting_pose: sip_ready
+
+  - slug: check_phone
+    label: "Check Phone"
+    category: lifestyle_action
+    motion_prompt: "Right hand lifts phone from hip to eye level, gaze drops to screen, brief pause reading, then chin lifts and eyes move naturally back to the environment with a slight smile"
+    duration_range: [3, 5]
+    scene_types: [lifestyle_moment, creator_hook, everyday_use_moment]
+    camera_pairing: static
+    starting_pose: pre_phone_check
+
+  - slug: drive_car
+    label: "Drive Car"
+    category: lifestyle_action
+    motion_prompt: "Subject keeps both hands in a believable driving position, makes one small steering correction, checks mirrors or road ahead naturally, and shifts posture subtly with the car's movement"
+    duration_range: [3, 6]
+    scene_types: [everyday_use_moment, lifestyle_moment, product_in_context]
+    camera_pairing: handheld
+    starting_pose: sitting_side_profile

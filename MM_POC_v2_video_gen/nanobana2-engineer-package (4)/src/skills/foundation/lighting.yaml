@@ -1,0 +1,84 @@
+name: lighting
+version: "1.2"
+type: foundation
+fragments:
+  default: |
+    <lighting>
+    Soft, even natural light: diffuse shadows and balanced exposure.
+    </lighting>
+  casual: |
+    <lighting>
+    Soft natural daylight: bright, airy, and inviting.
+    </lighting>
+  formal: |
+    <lighting>
+    Professional studio lighting: controlled fill, rim light for separation, and crisp contrast.
+    </lighting>
+  sporty: |
+    <lighting>
+    High-energy athletic lighting: bright, crisp, and dynamic.
+    </lighting>
+  elegant: |
+    <lighting>
+    Refined natural light: soft gradients and flattering fall-off.
+    </lighting>
+  minimalist: |
+    <lighting>
+    Clean, bright natural light: high-key aesthetic with soft shadows.
+    </lighting>
+  traditional: |
+    <lighting>
+    Warm golden-hour sunlight: rich tones and directional ambiance.
+    </lighting>
+  contemporary: |
+    <lighting>
+    Modern daylight: neutral color temperature and clean visibility.
+    </lighting>
+  bridal: |
+    <lighting>
+    Ethereal natural light: very soft, glowing, and flattering.
+    </lighting>
+  festive: |
+    <lighting>
+    Warm, celebratory lighting: ambient glow with rich contrast.
+    </lighting>
+  dramatic: |
+    <lighting>
+    High-contrast dramatic lighting: deep shadows, selective illumination, chiaroscuro effect.
+    Key light source with clear direction. Shadow hardness serves the mood.
+    </lighting>
+  cinematic: |
+    <lighting>
+    Cinematic three-point lighting: deliberate key, fill, and rim/separation light.
+    Color temperature supports the emotional tone. Every light source has a reason.
+    </lighting>
+  golden_hour: |
+    <lighting>
+    Warm golden-hour natural light: rich directional warmth, long shadows, amber color temperature.
+    </lighting>
+  editorial: |
+    <lighting>
+    Cinematic editorial with sculpted gradients and controlled drama.
+    Directional key light at 45-60° angle for subject and product contouring with defined shadow edges.
+    Rim light for dimensional separation and material enhancement.
+    Effect: Enhances material qualities—metal sheen, fabric texture, skin luminosity—with controlled specular highlights, no flare.
+    Shadow behavior: Sculpted shadows with gradient falloff; volumetric depth suggesting dimension and recent motion.
+    Forbidden: Flat frontal lighting, perfectly even illumination, harsh backlighting that washes out details, excessive glare.
+    </lighting>
+  commercial: |
+    <lighting>
+    Clean, controlled professional product photography lighting.
+    Directional key light at 45° with soft fill to minimize harsh shadows while maintaining definition.
+    Effect: Reveals material structure and clarity; controlled highlights showcase surface qualities without glare.
+    Shadow behavior: Soft gradient shadows providing depth without obscuring details.
+    Lighting priority: Product clarity and material accuracy; even illumination with gentle modeling.
+    Forbidden: Flat lighting that removes dimension, harsh shadows obscuring details, excessive glare or blown-out highlights.
+    </lighting>
+  lifestyle: |
+    <lighting>
+    Natural daylight aesthetic with soft, flattering ambient quality.
+    Diffused directional light suggesting window light or outdoor shade; gentle and inviting.
+    Effect: Natural material rendering with authentic qualities; soft highlights maintaining legibility.
+    Shadow behavior: Soft, natural shadows with gentle transitions; lifestyle authenticity.
+    Lighting character: Approachable, warm, naturally elegant; avoids overly dramatic or artificial feel.
+    </lighting>

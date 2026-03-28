@@ -1,0 +1,27 @@
+name: domain_luxury
+version: "1.0"
+type: ad_script
+fragments:
+  default: |
+    <domain_tactics name="Luxury">
+    Luxury advertising sells a feeling, not a product. Every frame must exude craftsmanship, exclusivity, and quiet confidence.
+
+    PACING: Slow. Deliberate. Let each shot breathe. Luxury never rushes. Hold shots 20-30% longer than feels natural — the pause IS the statement.
+
+    NARRATION: Whispered or low, measured voiceover. Short, evocative sentences. Never explain — suggest. Never sell — invite. Silence is as powerful as words. Use pauses between phrases.
+
+    VOCABULARY: "artisan", "curated", "timeless", "heritage", "bespoke", "crafted", "refined", "exclusive"
+    NEVER USE: "cheap", "deal", "discount", "affordable", "best value", "limited time offer"
+
+    VISUAL DIRECTION:
+    - Show craftsmanship: hands working materials, close-ups of texture, stitching, grain
+    - Materials are the star: leather, metal, glass, fabric — show surface quality in macro
+    - Lighting: warm, directional, with deep shadows. Golden hour or studio Rembrandt lighting
+    - Color palette: gold, black, cream, deep navy, burgundy. Muted and rich, never neon or bright
+    - Negative space is mandatory — the product breathes in the frame
+    - Never show a price. Never mention a number. The audience that matters doesn't ask.
+
+    MUSIC: Classical strings, ambient piano, or contemplative electronic. Understated. Never upbeat or poppy. The music should feel like a gallery, not a store.
+
+    CTA STYLE: "Discover the collection", "Experience [brand]", "Available at select locations". Never "Buy now" or "Shop today."
+    </domain_tactics>

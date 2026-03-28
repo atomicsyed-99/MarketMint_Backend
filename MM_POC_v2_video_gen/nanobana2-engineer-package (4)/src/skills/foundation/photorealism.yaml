@@ -1,0 +1,34 @@
+name: photorealism
+version: "1.2"
+type: foundation
+fragments:
+  default: |
+    <photorealism>
+    Physically plausible light transport: natural highlight roll-off and realistic shadow softness.
+    Photographic color response: accurate white balance and balanced contrast (no crushed blacks or blown highlights).
+    Texture fidelity: avoid CGI gloss, over-sharpening halos, or plastic skin/fabric smoothing.
+    </photorealism>
+  editorial: |
+    <photorealism>
+    High-end editorial finish: filmic micro-contrast, refined color grading, and controlled specular highlights.
+    Retain photographic grain structure; avoid synthetic, over-processed, or airbrushed aesthetics.
+    </photorealism>
+  commercial: |
+    <photorealism>
+    Cinematic photoreal commercial finish: every surface must survive zoom inspection.
+    Physically plausible light transport with natural highlight roll-off and realistic shadow softness.
+    Subtle film grain, micro-contrast, and controlled sharpness on product.
+    No over-smoothing, over-sharpening, fake glow, or HDR halos.
+    </photorealism>
+  jewelry: |
+    <photorealism>
+    8K photorealistic luxury commercial photography standard.
+    Physically plausible light transport: natural highlight roll-off on metal surfaces, realistic shadow softness with gradient falloff.
+    Material-specific rendering:
+    - Gemstones: crystal clarity with natural refraction, visible facet structure, authentic fire and dispersion
+    - Metals: controlled specular highlights with authentic sheen, no blown-out reflections
+    - Overall: macro-level detail revealing craftsmanship and material quality
+    Photographic color response: accurate white balance, balanced contrast with nuanced ramps, cinematic depth.
+    Texture fidelity: etched metal fidelity, gemstone facet precision; avoid CGI gloss, over-sharpening halos, or artificial smoothing.
+    8K resolution standard maintaining fine detail even in enlarged viewing.
+    </photorealism>

@@ -1,0 +1,8 @@
+name: commercial_finish
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    <commercial_finish>
+    Natural color balance. Edge control on product. Controlled sharpness. Color harmony across the frame.
+    </commercial_finish>

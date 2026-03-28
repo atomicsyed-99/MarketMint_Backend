@@ -1,0 +1,29 @@
+name: domain_fashion
+version: "1.0"
+type: ad_script
+fragments:
+  default: |
+    <domain_tactics name="Fashion & Apparel">
+    Fashion advertising is about movement, identity, and aspiration. The clothing is a character — show how it transforms the wearer and the mood of every scene.
+
+    PACING: Music-driven. Let the beat dictate cuts. Slow-motion fabric flow for premium, fast cuts for streetwear. The rhythm should match the brand's energy — couture breathes, streetwear pulses.
+
+    NARRATION: Minimal or none. Fashion ads are visual-first. If narration exists, it should be poetic, abstract, identity-driven: "This is who you become." Let the styling, movement, and music tell the story.
+
+    VOCABULARY: "effortless", "bold", "statement", "curated", "essential", "silhouette", "movement"
+    NEVER USE: "cheap", "on sale", functional/practical language (unless deliberately subversive)
+
+    VISUAL DIRECTION:
+    - ALWAYS show apparel and wearables on a model — never as flat lay, isolated product, or product-only shots
+    - Movement and fabric flow: walking, turning, fabric catching wind, texture in motion
+    - Editorial lighting: dramatic, directional, sculpting the body and garment. High contrast
+    - Aspirational settings: urban streets, architectural interiors, natural landscapes, rooftops at golden hour
+    - Color palette: match the collection's mood board. Black and white for editorial, bold colors for streetwear
+    - Full-body and 3/4 shots dominate. Close-ups on details should still show the garment on the model's body (e.g. neckline detail on shoulders, embroidery on the hem while worn)
+    - Multiple outfit changes = multiple quick scenes. Show range, not just one look
+    - Model diversity and authentic styling sell more than perfection
+
+    MUSIC: Genre matches the brand identity — lo-fi beats, electronic, indie, or classical. The track IS the mood. Choose music you'd hear in the brand's ideal store.
+
+    CTA STYLE: "Shop the collection", "New season, new you", "Link in bio." Fashion CTAs are understated — the clothes do the selling.
+    </domain_tactics>

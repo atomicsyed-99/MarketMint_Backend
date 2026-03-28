@@ -1,0 +1,32 @@
+name: white_balance
+version: "1.1"
+type: foundation
+fragments:
+  default: |
+    <white_balance>
+    Auto White Balance (AWB): neutral, chemically accurate color reproduction across garment, skin, and environment.
+    Pure whites remain true white with no yellow or blue drift; fabric colors match source material exactly.
+    Correct skin tones with natural warmth variation; no unnatural grey, green, or magenta casts on skin.
+    Consistent color temperature between subject and background — the model and scene must feel lit by the same source.
+    </white_balance>
+  warm: |
+    <white_balance>
+    Warm White Balance: color temperature shifted towards 3500K–4500K for golden-hour or candlelit ambiance.
+    Rich golden hues with natural warmth in skin tones; maintain realistic subsurface glow without orange oversaturation.
+    Fabric colors shift warm naturally — whites become creamy ivory, neutrals gain honey undertones.
+    Ensure warmth is uniform across subject and environment; avoid patchy warm/cool zones that break scene cohesion.
+    </white_balance>
+  cool: |
+    <white_balance>
+    Cool White Balance: color temperature shifted towards 6000K–7500K for crisp, modern, or wintery atmosphere.
+    Clean blue-tinted highlights with controlled coolness in shadows; skin retains healthy undertone, not pallid or ashen.
+    Fabrics appear clean and sharp — whites look bright and icy, darks gain subtle blue depth.
+    Consistent cool cast across subject and scene; avoid skin appearing lifeless while background reads correctly cool.
+    </white_balance>
+  tungsten: |
+    <white_balance>
+    Tungsten/Incandescent correction: neutralizes the heavy orange cast of indoor artificial lighting.
+    Clean, balanced indoor colors — fabrics read true to their original hue without amber contamination.
+    Skin tones appear natural and healthy under corrected tungsten light; avoid over-correction that introduces blue casts.
+    Maintain the cozy indoor atmosphere while keeping color accuracy; shadows stay neutral, not muddy orange.
+    </white_balance>

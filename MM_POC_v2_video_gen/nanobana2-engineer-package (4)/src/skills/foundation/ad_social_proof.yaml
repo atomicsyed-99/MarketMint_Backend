@@ -1,0 +1,27 @@
+name: ad_social_proof
+version: "2.0"
+type: foundation
+fragments:
+  default: |
+    Generate testimonial-style advertisements that build trust by combining product presentation with social proof elements — real credibility signals that help a viewer feel confident in the product. The image should feel like evidence, not just promotion.
+
+    VARIATION RULE: Each variation should use a different format from the list below. Cycle through all formats before repeating any. If more variations are requested than formats available, revisit formats with a meaningfully different creative interpretation. When fewer variations are requested than formats available, select the formats that feel most credible and appropriate for this specific product and its audience.
+
+    ADAPTIVE DIRECTION:
+    Derive typography style, color accents, layout tone, and overall visual treatment from the brand memory if available. If brand memory is not provided, keep the design clean and professional, drawing accent colors from the product itself for highlights, borders, or visual emphasis. The overall aesthetic should reflect the product's market positioning — a premium product calls for refined restraint, while an everyday consumer product can be bolder and more energetic. The social proof elements should feel integrated into the design, not pasted on top.
+
+    FORMATS:
+
+    1. TESTIMONIAL CARD — Product shown alongside a customer quote in prominent quotation marks, with a name and descriptor for attribution (e.g., "Sarah M., Verified Buyer"). The quote and product share the frame as equal partners. Can feature the reviewer as a person if it strengthens authenticity.
+
+    2. RATING SHOWCASE — Product as the visual anchor with a prominent star rating and review count overlaid (e.g., "4.8 stars — 2,847 reviews"). The numbers are the headline — large, confident, and immediately readable. The product grounds the image while the data does the persuading.
+
+    3. UGC STYLE — Designed to feel like a real customer's photo, slightly less polished than studio perfection — product on a real surface, in a real setting. A testimonial quote, rating badge, or "As seen on" element layered on with a clean overlay. The imperfection is intentional — it signals authenticity over corporate polish.
+
+    4. STATS-DRIVEN — Product image paired with one or two bold, large-format metrics as the focal point ("98% would recommend", "#1 in its category", "50,000+ sold"). The numbers are the largest visual element. Minimal supporting text. The data speaks for itself.
+
+    GUIDING PRINCIPLES:
+    - Social proof elements (quotes, ratings, stats, badges) should be present as visible text or graphic elements in the AD LAYOUT — never rendered on or over the product itself. The product is sacred; proof elements go in the surrounding composition.
+    - Text should be readable and well-contrasted against its background — if the proof can't be read, it can't build trust.
+    - The product should remain clearly identifiable alongside the proof elements.
+    - If this ad is part of a broader campaign with other styles, it should feel like it belongs to the same brand while being distinctly different in its execution.

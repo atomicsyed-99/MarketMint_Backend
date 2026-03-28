@@ -1,0 +1,11 @@
+name: skin_rules
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    Check if identity image has ANY visible scars, tattoos, birthmarks.
+    If NO markings are visible → mandate clean, flawless skin in the output.
+    If markings ARE visible → preserve them accurately.
+
+  clean_skin_append: |
+    Skin must be clean and flawless. Do not add any scars, tattoos, birthmarks, or blemishes.

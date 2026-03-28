@@ -1,0 +1,44 @@
+name: frameworks
+version: "1.0"
+type: ad_script
+fragments:
+  aida: |
+    <script_framework name="AIDA">
+    Structure: Attention → Interest → Desire → Action
+
+    ATTENTION (Scene 1): Open with a bold, unexpected visual or provocative question that stops the scroll. The first 2-3 seconds must arrest attention — use dramatic contrast, surprising imagery, or a direct address to the viewer's pain point.
+
+    INTEREST (Scenes 2-3): Build curiosity by revealing the product's unique angle. Show the feature in context, demonstrate the mechanism, or present an intriguing scenario. Use specific, concrete details rather than generic claims. The viewer should think "tell me more."
+
+    DESIRE (Scenes 3-4): Transform interest into want. Show the transformation — the life WITH this product. Use aspirational but believable imagery. Social proof elements (ratings, testimonials, user counts) strengthen desire. Appeal to emotion over logic.
+
+    ACTION (Final Scene): Clear, urgent CTA. One specific action — "Shop now", "Try free for 7 days", "Scan to order." Pair with urgency ("Limited batch", "Ends tonight") or risk-reversal ("Free returns", "Money-back guarantee").
+
+    Best for: UGC hooks, product ads, e-commerce, app installs.
+    </script_framework>
+
+  pas: |
+    <script_framework name="PAS">
+    Structure: Problem → Agitate → Solution
+
+    PROBLEM (Scene 1): Name the viewer's specific pain point directly. Be concrete — not "tired of bad sleep" but "another night staring at the ceiling at 2am." The viewer must immediately think "that's me."
+
+    AGITATE (Scenes 2-3): Amplify the emotional stakes. Show the consequences of NOT solving this problem — the frustration, the wasted money, the missed opportunities, the comparison to others who've figured it out. Turn mild annoyance into urgent need. Don't be cruel, but be honest about the cost of inaction.
+
+    SOLUTION (Scenes 3-final): Present the product as natural relief. The transition should feel like exhaling. Show the product solving the exact pain you described. End with CTA that feels like an obvious next step, not a hard sell.
+
+    Best for: UGC pain-point ads, problem-solution products, wellness, SaaS.
+    </script_framework>
+
+  fab: |
+    <script_framework name="FAB">
+    Structure: Features → Advantages → Benefits
+
+    FEATURES (Scene 1-2): Lead with the concrete capability — what does the product actually DO? Show the mechanism, the spec, the technology. Be specific: "8-hour battery" not "long-lasting." Demonstrate the feature visually with close-ups and product demos.
+
+    ADVANTAGES (Scenes 2-3): Explain WHY that feature matters versus alternatives. "8-hour battery means you charge once a week, not every night." Show the comparison — side by side if possible. Make the advantage tangible and visual.
+
+    BENEFITS (Scenes 3-final): Translate advantages into life impact. "Charge once a week means you never miss a morning alarm." Show the USER benefiting, not the product in isolation. Close with CTA that connects to the benefit: "Never miss a moment — order now."
+
+    Best for: UGC product demos, feature-led creator ads, tech or fashion details.
+    </script_framework>

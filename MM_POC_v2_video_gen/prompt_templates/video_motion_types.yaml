@@ -1,0 +1,29 @@
+# Video generation — Motion Type taxonomy
+# Prompt keywords optimized for realistic human motion generation.
+# Each motion_hint includes body-mechanics-level descriptors alongside
+# traditional video generation keywords.
+
+- slug: slow_motion
+  label: "Slow Motion"
+  motion_hint: "slow, readable movement with visible fabric response, natural balance shifts, and smooth follow-through"
+  pacing_hint: "Drawn out, meditative, emphasizing texture and material quality"
+
+- slug: action
+  label: "Action / Dynamic"
+  motion_hint: "brisk movement with grounded momentum, readable body mechanics, and controlled handheld energy"
+  pacing_hint: "Fast-paced, punchy, adrenaline-driven rhythm"
+
+- slug: cinematic
+  label: "Cinematic"
+  motion_hint: "smooth deliberate motion with natural gait, subtle weight shifts, and calm controlled pacing"
+  pacing_hint: "Deliberate, story-driven pacing with breathing room between beats"
+
+- slug: reveal
+  label: "Reveal / Unveil"
+  motion_hint: "gradual reveal through small turns, measured hand movement, and a clear transition from detail to full view"
+  pacing_hint: "Slow build to satisfying payoff moment, tension then release"
+
+- slug: natural_human
+  label: "Natural Human Motion"
+  motion_hint: "lifelike human movement with natural gait, small head and hand adjustments, and smooth starts and stops"
+  pacing_hint: "Lifelike pacing — movements flow at the speed a real person would move, with natural pauses and transitions between actions"

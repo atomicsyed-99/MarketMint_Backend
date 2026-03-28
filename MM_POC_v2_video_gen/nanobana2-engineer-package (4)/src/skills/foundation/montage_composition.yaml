@@ -1,0 +1,33 @@
+skill_name: montage_composition
+version: 1.0
+
+fragments:
+  default: |
+    <montage_composition>
+    This is a multi-panel product montage — a single image divided into distinct panels.
+    Each panel must contain the same product in a different context or from a different angle.
+    All panels together must fill the entire image frame with no empty areas or white gaps.
+    </montage_composition>
+
+  fill_frame: |
+    <montage_composition>
+    CRITICAL FILL REQUIREMENT — multi-panel layout:
+    All panels must together fill the entire image frame completely.
+    No white space, no empty areas, no partial panels, no gaps between or around panels.
+    The number of rendered panels must exactly match the number described in the layout.
+    Every panel must be fully rendered with content — no placeholder or blank areas permitted.
+    </montage_composition>
+
+  usage_scenarios: |
+    <montage_composition>
+    Usage scenario montage: each panel shows the product actively being used or placed in a distinct real-world setting.
+    Show genuine product utility — a person using it, the product in a relevant environment, the product in an active context.
+    Avoid static isolated product shots — the product should feel part of a living scene in each panel.
+    </montage_composition>
+
+  angles_details: |
+    <montage_composition>
+    Angles and details montage: each panel shows the same product from a genuinely distinct viewpoint.
+    Include at least one full-body view, one detail or feature close-up, and one angled or perspective view.
+    Maintain a consistent neutral or brand-appropriate background across all panels for visual cohesion.
+    </montage_composition>

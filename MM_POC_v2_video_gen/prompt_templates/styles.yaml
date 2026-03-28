@@ -1,0 +1,14 @@
+# Style classification for ad video pipeline
+# Only photorealistic styles retained — ads need real-world visuals
+
+- slug: photography
+  label: "Photography"
+  directives: "Photoreal image with natural skin texture, believable materials, restrained contrast, and realistic color"
+  camera_defaults: "50mm prime lens, eye-level framing, moderate depth of field, steady exposure"
+  color_palette_hint: "Neutral-to-warm color balance with realistic fabric and skin tones"
+
+- slug: cinematic
+  label: "Cinematic / Film Still"
+  directives: "Grounded film-still look with natural contrast, soft highlight rolloff, and controlled depth of field"
+  camera_defaults: "40mm lens feel, deliberate framing, gentle focus falloff, stable exposure"
+  color_palette_hint: "Warm neutrals and realistic shadow detail without stylized grading"

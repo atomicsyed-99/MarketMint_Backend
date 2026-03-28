@@ -1,0 +1,59 @@
+name: pacing
+version: "1.0"
+type: ad_script
+fragments:
+  6s: |
+    <pacing duration="6s" word_target="15" scenes="1">
+    Bumper ad — single scene, single message. No story arc, pure impact.
+    Structure: Brand/product + one key message + CTA. That's it.
+    Every frame must justify its existence. No establishing shots, no buildup.
+    The entire ad IS the hook. Treat it like a billboard that moves.
+    ~15 words of narration maximum. Prefer text overlay over voiceover.
+    </pacing>
+
+  10s: |
+    <pacing duration="10s" word_target="25" scenes="2-3">
+    Micro-story format. Tight, efficient, every second earns the next.
+    Structure: Hook (0-2s) → Core message (2-7s) → CTA (7-10s)
+    - Hook: One powerful visual or statement. Scroll-stopping.
+    - Core: Show the ONE thing that matters. Product + benefit. Nothing else.
+    - CTA: Clear, direct, single action. URL, QR code, or "Shop now."
+    ~25 words narration. Speak at natural pace, not rushed.
+    2-3 scenes maximum. Each scene must pull its weight.
+    </pacing>
+
+  15s: |
+    <pacing duration="15s" word_target="38" scenes="3-4">
+    Minimum viable story. Enough room for setup-payoff but no filler.
+    Structure: Hook (0-3s) → Build (3-10s) → CTA (10-15s)
+    - Hook: Attention-grabbing opening. Question, claim, or visual surprise.
+    - Build: Demonstrate value. Show the product, the benefit, or the transformation.
+    - CTA: Urgency + action. "Order today — free shipping this week only."
+    ~38 words narration. Natural conversational pace.
+    3-4 scenes. Scene 1 is the hook, middle scenes are the story, final scene is CTA.
+    </pacing>
+
+  30s: |
+    <pacing duration="30s" word_target="75" scenes="4-5">
+    Standard commercial format. Room for a complete story arc.
+    Structure: Hook (0-5s) → Story (5-20s) → Proof (20-25s) → CTA (25-30s)
+    - Hook (5s): Bold opening — pain point, question, or dramatic visual.
+    - Story (15s): The narrative core. Problem→solution, before→after, or demo sequence.
+    - Proof (5s): Social proof, data point, testimonial clip, or authority signal.
+    - CTA (5s): Clear action + urgency. "Limited time" or "Try free."
+    ~75 words narration. Professional voiceover pace (~2.5 words/sec).
+    4-5 scenes. Aim for your final cut to land at 28-29 seconds.
+    </pacing>
+
+  60s: |
+    <pacing duration="60s" word_target="150" scenes="5-7">
+    Full storytelling format. Deepest emotional impact.
+    Structure: Hook (0-5s) → Story (5-35s) → Proof (35-50s) → CTA (50-60s)
+    - Hook (5s): Compelling opening that sets the emotional tone.
+    - Story (30s): Complete narrative arc — character, conflict, transformation. This is where you earn the viewer's emotion. Multiple scene changes, varied shot sizes.
+    - Proof (15s): Layer social proof — testimonials, data, press logos, user count. Build irrefutable case.
+    - CTA (10s): Multi-layered close — primary CTA + secondary offer + urgency.
+    ~150 words narration. Room for music to breathe, for silences, for emotional beats.
+    5-7 scenes. Pacing should vary — fast sections and slow contemplative moments.
+    Aim for final cut at 57-59 seconds.
+    </pacing>

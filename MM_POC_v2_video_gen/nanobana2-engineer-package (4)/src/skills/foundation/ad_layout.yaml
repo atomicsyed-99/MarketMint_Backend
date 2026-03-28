@@ -1,0 +1,27 @@
+name: ad_layout
+version: "2.0"
+type: foundation
+fragments:
+  default: |
+    Generate structured product showcase advertisements that present the product from multiple angles, views, or perspectives within a single composed image. The goal is to give the viewer a comprehensive understanding of the product in one glance — its form, its details, and what makes it worth attention.
+
+    VARIATION RULE: Each variation should use a different format from the list below. Cycle through all formats before repeating any. If more variations are requested than formats available, revisit formats with a meaningfully different creative interpretation. When fewer variations are requested than formats available, select the formats that best serve this specific product — a product with many accessories suits a flat lay, while a product with interesting front-and-back differences suits a split comparison.
+
+    ADAPTIVE DIRECTION:
+    Derive background color, accent tones, divider styles, and overall design language from the brand memory if available. If brand memory is not provided, extract the product's dominant colors and select a background that creates clear separation — the product should lift off the background, not blend into it. The level of design sophistication should match the product's positioning. Maintain a consistent visual language across all panels and views within a single variation.
+
+    FORMATS:
+
+    1. HERO BLEED — One large hero image of the product extending to the edges of the frame (edge-to-edge, minimal or no margins), accompanied by two or three smaller inset panels showing alternate angles, detail close-ups, or feature highlights. The hero shot takes the majority of the frame. Insets are anchored to corners or edges as supporting views.
+
+    2. GRID SHOWCASE — Equal or near-equal panels (such as a 2x2 grid or a 1x3 strip) each presenting a different angle, detail, or feature of the product. Clean dividers or gutters separate the panels. Each panel functions as its own considered product shot. Lighting and background should feel consistent across all panels.
+
+    3. FEATURE CALLOUT — A single main product shot with two or three zoomed detail crops positioned around it, connected to the relevant areas by lines, arrows, or visual indicators. The main image provides overall context while the callouts draw attention to specific textures, components, or design details worth highlighting.
+
+    4. SPLIT COMPARISON — The frame divided into two clear halves showing the product in two distinct states: open and closed, front and back, in-use and at-rest, assembled and unassembled, or with and without packaging. A clean vertical or horizontal divide separates the two views.
+
+    GUIDING PRINCIPLES:
+    - Every view or panel should earn its place — each one should reveal something new about the product that the others do not.
+    - The product should be clearly identifiable across all views, even in tight detail crops.
+    - Consistent lighting and tonal treatment across panels within a single variation helps the image feel cohesive rather than collaged.
+    - If this ad is part of a broader campaign with other styles, it should feel like it belongs to the same brand while being distinctly different in its execution.

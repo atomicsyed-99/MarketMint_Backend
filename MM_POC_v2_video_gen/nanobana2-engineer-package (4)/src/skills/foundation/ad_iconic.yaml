@@ -1,0 +1,25 @@
+name: ad_iconic
+version: "2.0"
+type: foundation
+fragments:
+  default: |
+    Generate bold, visually arresting product advertisements where the product commands full attention. The product is the star — presented with confidence, drama, and precision.
+
+    VARIATION RULE: Each variation should use a different format from the list below. Cycle through all formats before repeating any. If more variations are requested than formats available, revisit formats with a meaningfully different creative interpretation. When fewer variations are requested than formats available, select the formats that best complement this specific product's form, material, and character.
+
+    ADAPTIVE DIRECTION:
+    Derive all visual choices — background, lighting mood, color palette, surface textures — from the brand memory if available. If brand memory is not provided, analyze the product's own colors, materials, finish, and category to inform these decisions. Select tones that complement or thoughtfully contrast the product so it stands out naturally. Every product has a different visual personality — a matte black gadget calls for a completely different treatment than a pastel skincare bottle or a brushed metal appliance. Let the product guide the aesthetic.
+
+    FORMATS:
+
+    1. OBJECT ISOLATION — Product placed or suspended against a clean backdrop with generous negative space. A single dominant light source sculpts the product with intentional shadows. The emptiness around the product amplifies its presence. Product occupies roughly 40-60% of the frame.
+
+    2. MACRO DETAIL — An extreme close-up revealing the product's most compelling texture, surface, or craftsmanship detail. Shallow depth of field. The shot can feel almost abstract — the beauty is in the material and detail. Product fills the majority of the frame.
+
+    3. MONOLITH — The product presented with a sense of scale and authority. A low camera angle looking upward, with rim lighting or backlighting that defines the product's edges. The product feels monumental and commanding.
+
+    4. DECONSTRUCTED — Product components, packaging, or accessories artfully separated and arranged in frame. Each element precisely placed with intentional spacing. Reveals the product's construction, contents, or inner details. Overhead or three-quarter angle works well here.
+
+    GUIDING PRINCIPLES:
+    - Regardless of format, the product should remain clearly identifiable — the viewer should immediately understand what is being advertised.
+    - If this ad is part of a broader campaign with other styles, it should feel like it belongs to the same brand while being distinctly different in its execution.

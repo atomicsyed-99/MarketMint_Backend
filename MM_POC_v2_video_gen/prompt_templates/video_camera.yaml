@@ -1,0 +1,38 @@
+# Video generation — Camera Technique taxonomy
+# Each technique_hint includes the camera behavior and recommended action pairings.
+# best_with_actions describes which body motions this camera technique complements.
+
+- slug: dolly_in
+  label: "Dolly In / Push"
+  technique_hint: "slow push-in toward the subject while maintaining stable framing and natural perspective"
+  best_with_actions: "emotional moments, looking up, product inspection, checking phone/watch, pausing after movement"
+
+- slug: tracking
+  label: "Tracking Shot"
+  technique_hint: "camera tracks laterally alongside subject matching their walking pace, consistent framing, smooth lateral movement, subject centered while world slides past"
+  best_with_actions: "walking, strolling, moving through a space, side-by-side movement"
+
+- slug: static
+  label: "Static / Locked Off"
+  technique_hint: "locked camera with stable framing; all movement comes from the subject and environment"
+  best_with_actions: "watch-checking, phone-checking, sitting down, standing up, subtle gestures, hand movements, product pickup, twirling in place"
+
+- slug: handheld
+  label: "Handheld / Documentary"
+  technique_hint: "light handheld drift with human-operated framing that stays readable and controlled"
+  best_with_actions: "candid moments, talking to camera, unboxing, product demos, casual walking"
+
+- slug: orbit
+  label: "Orbit / Arc"
+  technique_hint: "slow arc around the subject while keeping a consistent distance and stable horizon"
+  best_with_actions: "turning around, revealing outfit details, product showcase, hero poses, standing with dramatic lighting"
+
+- slug: follow_behind
+  label: "Follow Behind"
+  technique_hint: "camera follows behind subject at consistent distance, gentle floating movement, over-shoulder perspective, environment reveals ahead of subject"
+  best_with_actions: "walking forward, entering a space, approaching something, journey moments"
+
+- slug: low_angle_tilt_up
+  label: "Low Angle Tilt Up"
+  technique_hint: "low camera position with a gentle upward tilt that follows the subject naturally"
+  best_with_actions: "looking up, moments of wonder, confident standing, power poses, aspirational shots"

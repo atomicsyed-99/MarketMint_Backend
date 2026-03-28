@@ -1,0 +1,27 @@
+name: domain_tech
+version: "1.0"
+type: ad_script
+fragments:
+  default: |
+    <domain_tactics name="Tech">
+    Tech advertising must make the abstract tangible. Show what the product DOES, not what it IS. Lead with the problem, demo the solution, prove the claim.
+
+    PACING: Crisp and efficient. Quick cuts for feature demos, slower beats for the "wow" moments. Match the product's energy — a productivity tool feels different from a gaming device.
+
+    NARRATION: Clear, confident, knowledgeable. Conversational but authoritative. Use specific numbers and claims: "50% faster", "8-hour battery", "one-tap setup." Avoid jargon unless your audience expects it.
+
+    VOCABULARY: "seamless", "powerful", "intelligent", "instant", "effortless", "next-generation", "engineered"
+    NEVER USE: vague superlatives without proof ("best ever", "revolutionary" without showing why)
+
+    VISUAL DIRECTION:
+    - Lead with the problem being solved — show the frustration, then the relief
+    - Product demos: clean backgrounds, screen recordings with smooth transitions, UI close-ups
+    - Show speed/efficiency: side-by-side comparisons, split-screen before/after, progress indicators
+    - Color palette: clean whites, blues, subtle gradients. Modern, minimal, Apple-inspired aesthetic
+    - Data visualizations: animate statistics, growth charts, comparison bars
+    - Hands-on-device shots for tangibility. Real-world use context for relatability.
+
+    MUSIC: Clean electronic, subtle synth pads, modern ambient. Energy level matches the product category — upbeat for consumer, measured for enterprise.
+
+    CTA STYLE: "Try free for 14 days", "See it in action", "Get started in 60 seconds." Always reduce friction — emphasize how EASY the next step is.
+    </domain_tactics>

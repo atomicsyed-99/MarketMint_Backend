@@ -1,0 +1,16 @@
+# Use Case classification for ad video pipeline
+# Only ad-video-relevant use cases retained
+
+- slug: product_marketing
+  label: "Product Marketing"
+  structure: "Commercial product photography, {product} as hero subject, professional advertising aesthetic, aspirational setting"
+  camera_hint: "50-85mm lens, f/2.8-f/4, product-sharp focus, shallow depth of field"
+  lighting_hint: "Three-point commercial lighting, soft key light, fill light to reduce shadows, rim light for edge definition"
+  composition_hint: "Rule of thirds, product centered or slightly off-center, negative space for text overlay"
+
+- slug: social_media_post
+  label: "Social Media Post"
+  structure: "Eye-catching social media visual, bold composition, vibrant and saturated colors, high visual impact for scroll-stopping"
+  camera_hint: "35-50mm lens, f/2.0, wide enough for context, sharp subject"
+  lighting_hint: "Natural or golden hour lighting, warm tones, high contrast"
+  composition_hint: "Square or vertical framing, strong focal point, minimal clutter, space for caption overlay"

@@ -1,0 +1,16 @@
+name: material_accuracy
+version: "1.1"
+type: foundation
+fragments:
+  default: |
+    <material_accuracy>
+    Physically accurate fabric rendering: correct weight, drape, and stiffness.
+    Match surface properties: specular roughness, sheen, and texture frequency for the specific material type.
+    </material_accuracy>
+  detailed: |
+    <material_accuracy>
+    Each material must be identifiable by optics alone:
+    Plastic: specular roll-off, micro scratches. Glass: refraction, thickness distortion.
+    Metal: directional reflections. Fabric: fiber noise, folds, tension. Paper: grain, soft edges.
+    If the material looks ambiguous, it fails.
+    </material_accuracy>

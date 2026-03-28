@@ -1,0 +1,175 @@
+# Pose catalog for fashion/lifestyle ad video keyframes
+# Organized by posture category with multiple variations per category.
+# Each pose has a slug, label, prompt snippet, and compatible scene types.
+#
+# Motion-aware poses (motion_ready category) are designed as starting positions
+# for natural human actions — they set up the first frame so that video
+# generation can animate believable motion from the pose.
+
+standing:
+  - slug: standing_confident
+    label: "Confident Stand"
+    prompt: "Standing tall with one hand on hip, weight on back foot, chin slightly raised, confident and poised expression"
+    scene_types: [brand_cta, product_in_context, lifestyle_moment]
+
+  - slug: standing_relaxed_lean
+    label: "Relaxed Lean"
+    prompt: "Leaning casually against a wall or pillar with arms relaxed at sides, one ankle crossed over the other, relaxed and approachable expression"
+    scene_types: [lifestyle_moment, ambient_establishing]
+
+  - slug: standing_walk_mid_stride
+    label: "Walking Mid-Stride"
+    prompt: "Captured mid-stride walking forward, one foot ahead, arms in natural walking motion, fabric flowing with movement, candid and dynamic"
+    scene_types: [lifestyle_moment, product_demo]
+
+  - slug: standing_twirl_start
+    label: "Twirl Start"
+    prompt: "Arms slightly extended, body beginning a gentle twirl, skirt or fabric just starting to lift, joyful expression"
+    scene_types: [product_demo, lifestyle_moment]
+
+  - slug: standing_looking_over_shoulder
+    label: "Over-the-Shoulder Glance"
+    prompt: "Standing with back partially to camera, looking over one shoulder with a soft smile, showing back detail of outfit"
+    scene_types: [product_reveal, brand_cta]
+
+  - slug: standing_hands_in_pockets
+    label: "Hands in Pockets"
+    prompt: "Standing straight with both hands casually in trouser or kurti pockets, relaxed shoulders, easygoing smile"
+    scene_types: [lifestyle_moment, creator_cta]
+
+  - slug: standing_arms_crossed
+    label: "Arms Crossed Stylish"
+    prompt: "Standing with arms loosely crossed at waist, head tilted slightly, editorial fashion pose, showcasing sleeve and neckline details"
+    scene_types: [brand_cta, product_in_context]
+
+  - slug: standing_holding_accessory
+    label: "Holding Accessory"
+    prompt: "Standing and holding a complementary accessory (bag, hat, scarf, sunglasses) at waist level, drawing attention to both outfit and accessory"
+    scene_types: [product_reveal, product_in_context]
+
+sitting:
+  - slug: sitting_cross_legged
+    label: "Cross-Legged Casual"
+    prompt: "Seated cross-legged on a chair or cushion, hands resting on knees, relaxed posture, warm and inviting expression"
+    scene_types: [lifestyle_moment, creator_hook, creator_cta]
+
+  - slug: sitting_legs_crossed_elegant
+    label: "Legs Crossed Elegant"
+    prompt: "Seated on a chair with legs crossed at the knee, one hand resting on thigh, upright posture, polished and elegant"
+    scene_types: [brand_cta, product_in_context]
+
+  - slug: sitting_leaning_forward
+    label: "Leaning Forward Engaged"
+    prompt: "Seated and leaning slightly forward with elbows on knees, looking into camera with engaged and animated expression, conversational feel"
+    scene_types: [creator_hook, creator_cta]
+
+  - slug: sitting_on_steps
+    label: "Sitting on Steps"
+    prompt: "Sitting casually on outdoor stone steps, one leg extended, one bent, hands resting naturally, showing full length of outfit"
+    scene_types: [lifestyle_moment, ambient_establishing]
+
+  - slug: sitting_side_profile
+    label: "Seated Side Profile"
+    prompt: "Seated in profile view on a bench or chair, looking into the distance, showing the drape and silhouette of the outfit from the side"
+    scene_types: [lifestyle_moment, ambient_establishing]
+
+  - slug: sitting_holding_cup
+    label: "Morning Ritual"
+    prompt: "Seated comfortably holding a ceramic cup or glass, both hands wrapped around it, gentle smile, cozy and aspirational morning scene"
+    scene_types: [product_in_context, lifestyle_moment]
+
+pov:
+  - slug: pov_looking_down_at_outfit
+    label: "POV Looking Down"
+    prompt: "First-person point of view looking down at own outfit, hands visible adjusting or smoothing the fabric, feet and lower body visible, authentic self-view angle"
+    scene_types: [product_reveal, product_demo]
+
+  - slug: pov_mirror_reflection
+    label: "Mirror Reflection"
+    prompt: "Point of view facing a mirror, full outfit visible in the reflection, one hand adjusting hair or collar, getting-ready moment"
+    scene_types: [product_reveal, creator_hook]
+
+  - slug: pov_fabric_close_up
+    label: "POV Fabric Touch"
+    prompt: "Close-up point of view of hands touching or feeling the fabric texture, fingers running along embroidery details, tactile and sensory"
+    scene_types: [product_reveal, product_demo]
+
+  - slug: pov_walking_path
+    label: "POV Walking Path"
+    prompt: "First-person view walking along a path or corridor, outfit hem and feet visible in frame, dynamic forward motion, environment visible ahead"
+    scene_types: [lifestyle_moment, ambient_establishing]
+
+  - slug: pov_unboxing
+    label: "POV Unboxing"
+    prompt: "First-person point of view unboxing or unfolding the garment from packaging, hands lifting the fabric out, revealing the product for the first time"
+    scene_types: [product_reveal, creator_hook]
+
+# Motion-ready poses — designed as starting frames for realistic video animation.
+# Each describes exact weight distribution, limb position, and body angle so
+# the video model can animate natural motion from this starting point.
+motion_ready:
+  - slug: walk_start_left_foot
+    label: "Walk Start (Left Foot Forward)"
+    prompt: "Weight on right foot, left foot stepping forward mid-stride, left arm swinging back and right arm forward in natural opposition, slight forward lean at torso, relaxed shoulders, gaze directed ahead along walking path, candid expression"
+    scene_types: [lifestyle_moment, ambient_establishing, product_in_context]
+    camera_pairing: tracking
+
+  - slug: walk_start_right_foot
+    label: "Walk Start (Right Foot Forward)"
+    prompt: "Weight on left foot, right foot stepping forward mid-stride, right arm swinging back and left arm forward in natural opposition, slight forward lean at torso, relaxed shoulders, gaze directed ahead, natural walking expression"
+    scene_types: [lifestyle_moment, ambient_establishing, product_in_context]
+    camera_pairing: tracking
+
+  - slug: pre_watch_check
+    label: "Pre Watch Check"
+    prompt: "Standing with weight evenly distributed, left arm beginning to rise with elbow bending, wrist starting to rotate palm-inward, gaze beginning to shift downward toward left wrist, body slightly turned at 15 degrees to camera, natural curious expression"
+    scene_types: [lifestyle_moment, product_demo]
+    camera_pairing: static
+
+  - slug: pre_phone_check
+    label: "Pre Phone Check"
+    prompt: "Standing naturally, right hand holding phone at hip level, arm beginning to lift phone upward, weight on both feet, head starting to tilt downward, relaxed posture"
+    scene_types: [lifestyle_moment, creator_hook]
+    camera_pairing: static
+
+  - slug: pre_look_up
+    label: "Pre Look Up"
+    prompt: "Standing with chin level, gaze forward, neck neutral position, shoulders relaxed, weight balanced on both feet, arms at sides or one hand resting casually, calm contemplative expression about to shift to wonder"
+    scene_types: [lifestyle_moment, ambient_establishing]
+    camera_pairing: dolly_in
+
+  - slug: about_to_turn
+    label: "About to Turn Around"
+    prompt: "Standing with back 45 degrees to camera, weight shifting to one foot, head beginning to rotate over shoulder, one arm starting to swing with the turn, torso initiating rotation, curious or playful expression beginning to form"
+    scene_types: [product_reveal, lifestyle_moment]
+    camera_pairing: orbit
+
+  - slug: about_to_sit
+    label: "About to Sit Down"
+    prompt: "Standing in front of a chair or surface, knees beginning to bend, hips shifting backward, one hand reaching behind for balance, torso leaning slightly forward to counterbalance, relaxed expression"
+    scene_types: [lifestyle_moment, creator_hook]
+    camera_pairing: static
+
+  - slug: pre_product_pickup
+    label: "Pre Product Pickup"
+    prompt: "Standing near a surface with product, one arm extending toward the product with fingers beginning to spread, gaze directed at the product, slight forward lean, other arm relaxed at side, focused and interested expression"
+    scene_types: [product_reveal, product_demo]
+    camera_pairing: dolly_in
+
+  - slug: pre_twirl
+    label: "Pre Twirl (Motion Ready)"
+    prompt: "Standing with weight shifting to left foot as pivot, right foot beginning to push off, arms starting to extend outward from body, fabric at rest but about to catch air, joyful anticipatory expression, body coiled slightly for rotation"
+    scene_types: [product_demo, lifestyle_moment]
+    camera_pairing: static
+
+  - slug: pre_hair_touch
+    label: "Pre Hair Touch"
+    prompt: "Standing with one hand at shoulder level beginning to reach toward hair, elbow bent at 90 degrees, fingers slightly curled, head tilting gently toward the rising hand, soft natural expression, weight on one foot"
+    scene_types: [lifestyle_moment, brand_cta]
+    camera_pairing: dolly_in
+
+  - slug: sip_ready
+    label: "About to Take a Sip"
+    prompt: "Seated or standing comfortably, both hands holding a cup at chest level, cup beginning to rise toward lips, head tilting slightly back, eyes half-closing in anticipation, relaxed content expression"
+    scene_types: [lifestyle_moment, product_in_context]
+    camera_pairing: static

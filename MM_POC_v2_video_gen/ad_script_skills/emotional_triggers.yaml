@@ -1,0 +1,101 @@
+name: emotional_triggers
+version: "1.0"
+type: ad_script
+fragments:
+  scarcity: |
+    <emotional_trigger name="Scarcity / FOMO">
+    Trigger fear of missing out through limited availability and time pressure.
+
+    Application in script:
+    - Use countdown language: "Only available until...", "Limited batch of...", "Last chance to..."
+    - Show visual scarcity: items disappearing, stock counters, closing doors
+    - Place urgency in the FINAL scene and CTA — build value first, then add pressure
+    - Pair with social proof: "2,847 people ordered today" amplifies scarcity
+
+    Narration tone: Confident, slightly urgent but not desperate. Create excitement about the opportunity, not anxiety about missing it.
+    Words to use: "exclusive", "limited", "only", "before it's gone", "while supplies last"
+    </emotional_trigger>
+
+  social_proof: |
+    <emotional_trigger name="Social Proof">
+    Build trust through evidence of crowd behavior and peer endorsement.
+
+    Application in script:
+    - Lead with numbers: "Join 50,000+ happy customers", "Rated 4.9 stars"
+    - Show real people using and endorsing the product — diversity in testimonials
+    - Display recognizable logos, certifications, "as seen in" press mentions
+    - User-generated content feels more authentic than polished testimonials
+
+    Narration tone: Warm, inclusive, community-building. "You're not alone" energy.
+    Words to use: "trusted by", "loved by", "join", "community", "everyone's talking about"
+    </emotional_trigger>
+
+  authority: |
+    <emotional_trigger name="Authority / Expertise">
+    Leverage credibility through expert endorsement and demonstrated expertise.
+
+    Application in script:
+    - Feature experts, professionals, or influencers with visible credentials
+    - Show certifications, awards, patents, clinical studies
+    - Use precise language: "dermatologist-tested", "NASA-grade materials", specific data points
+    - Lab coats, professional settings, and technical demonstrations build authority visually
+
+    Narration tone: Confident, knowledgeable, measured. Never boastful — let credentials speak.
+    Words to use: "proven", "clinically tested", "expert-recommended", "award-winning", "patented"
+    </emotional_trigger>
+
+  aspiration: |
+    <emotional_trigger name="Aspiration / Transformation">
+    Show the ideal outcome the viewer desires — the life they want to live.
+
+    Application in script:
+    - Paint a vivid picture of the "after" state — not just the product, but the LIFE it enables
+    - Use aspirational but BELIEVABLE imagery — too perfect feels fake
+    - Show someone who looks like the viewer, but in their desired future state
+    - The product is the bridge between current reality and aspiration
+
+    Narration tone: Inspiring, warm, empowering. "This could be you" without condescension.
+    Words to use: "imagine", "transform", "elevate", "unlock", "become", "discover"
+    </emotional_trigger>
+
+  nostalgia: |
+    <emotional_trigger name="Nostalgia / Warmth">
+    Evoke warm memories and emotional connection through familiar, comforting imagery.
+
+    Application in script:
+    - Reference shared cultural memories: childhood moments, family traditions, "remember when"
+    - Use warm, golden-tinted visuals — vintage filters, soft focus, warm lighting
+    - Connect the product to timeless values: family, friendship, simple pleasures
+    - Music is crucial — familiar melodies or acoustic warmth amplify nostalgia
+
+    Narration tone: Gentle, reflective, warmly familiar. Like a trusted friend sharing a memory.
+    Words to use: "remember", "timeless", "classic", "home", "tradition", "just like"
+    </emotional_trigger>
+
+  curiosity: |
+    <emotional_trigger name="Curiosity / Open Loop">
+    Create irresistible knowledge gaps that compel viewers to keep watching.
+
+    Application in script:
+    - Open with a question or surprising claim: "What if everything you know about X is wrong?"
+    - Tease the reveal — show partial information, build toward the "aha" moment
+    - Use visual mystery: partially hidden product, unexpected context, "wait for it" energy
+    - Delay the payoff just enough to maintain tension without frustrating
+
+    Narration tone: Intriguing, slightly provocative, knowing. Like sharing a secret.
+    Words to use: "secret", "discover", "what if", "you won't believe", "here's why", "the truth about"
+    </emotional_trigger>
+
+  belonging: |
+    <emotional_trigger name="Belonging / Community">
+    Tap into the human need for connection, identity, and tribal membership.
+
+    Application in script:
+    - Show groups of people united by the product or brand — shared identity
+    - Use inclusive language: "join us", "be part of", "welcome to the club"
+    - Highlight the community aspect: user events, shared experiences, collective identity
+    - The product is a membership badge — owning it means belonging to something
+
+    Narration tone: Warm, inclusive, celebratory. Welcoming the viewer into the fold.
+    Words to use: "together", "community", "belong", "join", "one of us", "movement"
+    </emotional_trigger>

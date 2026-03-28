@@ -1,0 +1,24 @@
+name: depth_of_field
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    <depth_of_field>
+    Natural optical depth of field: subject in sharp focus with smooth fall-off to background.
+    f/2.8 to f/4 aperture aesthetic for balanced separation.
+    </depth_of_field>
+  shallow: |
+    <depth_of_field>
+    Shallow depth of field: f/1.4 aperture style, creamy bokeh, dreamy background blur.
+    Strong subject isolation with soft out-of-focus elements.
+    </depth_of_field>
+  deep: |
+    <depth_of_field>
+    Deep depth of field: f/8 to f/11 aperture style, edge-to-edge sharpness.
+    Everything in focus from foreground to background, clear contextual details.
+    </depth_of_field>
+  cinematic: |
+    <depth_of_field>
+    Cinematic depth of field: anamorphic lens characteristics, oval bokeh, rack-focus aesthetic.
+    Distinct separation with smooth, painted-like background blur.
+    </depth_of_field>

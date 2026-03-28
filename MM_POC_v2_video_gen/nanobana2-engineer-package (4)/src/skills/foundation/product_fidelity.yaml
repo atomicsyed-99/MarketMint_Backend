@@ -1,0 +1,31 @@
+name: product_fidelity
+version: "1.1"
+type: foundation
+fragments:
+  default: |
+    <product_fidelity>
+    Strict Garment Lock: The output garment must be an exact structural and visual replica of the input.
+    Preserve all details: exact silhouette, seam placement, construction lines, print patterns, logos, and trim.
+    Maintain color accuracy and material finish relative to lighting conditions.
+    </product_fidelity>
+  ad: |
+    <product_fidelity>
+    Product Fidelity Absolute Lock: The product must remain an optical digital twin of the reference.
+    Zero tolerance for redesign, reinterpretation, proportion drift, or color drift.
+    Treat product images as sacred reference assets — edit the SCENE around the product, NOT the product itself.
+    Allowed: physically correct lighting, realistic reflections, natural shadow behavior.
+    Forbidden: shape changes, surface "beautification", adding overlays or ad elements onto the product itself.
+    If the reference image contains spec badges, text callouts, warranty stickers, watermarks, or marketing overlays — these are image production artifacts, not part of the physical product. Do not reproduce them.
+    All ad copy and marketing elements go in the surrounding layout — never on or over the product.
+    </product_fidelity>
+  ad_garment: |
+    <product_fidelity>
+    Product Fidelity Absolute Lock: The product must remain an optical digital twin of the reference.
+    Zero tolerance for redesign, reinterpretation, proportion drift, or color drift.
+    Treat product images as sacred reference assets — edit the SCENE around the product, NOT the product itself.
+    Allowed: physically correct lighting, realistic reflections, natural shadow behavior.
+    Forbidden: shape changes, surface "beautification", adding overlays or ad elements onto the product itself.
+    If the reference image contains spec badges, text callouts, warranty stickers, watermarks, or marketing overlays — these are image production artifacts, not part of the physical product. Do not reproduce them.
+    All ad copy and marketing elements go in the surrounding layout — never on or over the product.
+    Mixed construction rule: if the garment has multiple fabric zones (e.g. solid body + patterned sleeves, contrast panels, mixed materials), each zone must match its reference section exactly. Do NOT extrapolate a texture or pattern from one panel to adjacent panels — a solid panel stays solid even if neighbouring panels are patterned.
+    </product_fidelity>

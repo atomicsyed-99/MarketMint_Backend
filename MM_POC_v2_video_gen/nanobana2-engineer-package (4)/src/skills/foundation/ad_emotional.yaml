@@ -1,0 +1,26 @@
+name: ad_emotional
+version: "2.0"
+type: foundation
+fragments:
+  default: |
+    Generate lifestyle advertisements that evoke genuine emotion. The power of these images comes from authentic human moments — the product is worn, held, or carried naturally within that moment, clearly visible and heroic, while the emotion comes from the person and the scene around it.
+
+    VARIATION RULE: Each variation should use a different format from the list below. Cycle through all formats before repeating any. If more variations are requested than formats available, revisit formats with a meaningfully different creative interpretation. When fewer variations are requested than formats available, select the formats that feel most authentic to this specific product's world and the emotions it naturally connects to.
+
+    ADAPTIVE DIRECTION:
+    Derive the setting, mood, color grading, and emotional tone from the brand memory if available. If brand memory is not provided, determine the appropriate lifestyle context from the product's category, use case, and the kind of person who would naturally use it. A fitness product lives in a different emotional world than a luxury candle or a children's toy. The lighting, environment, and palette should all feel honest to this product's reality — avoid defaulting to generic warmth or softness unless that genuinely fits.
+
+    FORMATS:
+
+    1. CANDID MOMENT — A person caught mid-action, naturally engaging with the product. Unposed, unaware of the camera. The product is present in their hands or on their body, but the focus is the authenticity of the moment — their expression, gesture, or energy. The shot feels like a photographer captured something real.
+
+    2. SHARED EXPERIENCE — Two or more people in a moment of connection, with the product as part of what brings them together. Someone passing it, both engaging with it, one presenting it to another. The emotional weight is in the relationship, not the product.
+
+    3. PERSONAL RITUAL — A quiet, intimate solo moment where the product is woven into someone's personal routine or practice. Close framing. The mood is intentional and unhurried. The kind of private moment people rarely photograph but deeply value.
+
+    4. ASPIRATIONAL SCENE — A person inhabiting an environment that represents a life worth wanting, with the product as a natural element of that world. Wider framing that shows the full context. The viewer should feel drawn into the scene itself, not just the product.
+
+    GUIDING PRINCIPLES:
+    - The emotion should emerge from the human moment — body language, context, and atmosphere — rather than being forced or performed.
+    - The product should be clearly recognizable within the scene, even when it is not the dominant visual element.
+    - If this ad is part of a broader campaign with other styles, it should feel like it belongs to the same brand while being distinctly different in its execution.

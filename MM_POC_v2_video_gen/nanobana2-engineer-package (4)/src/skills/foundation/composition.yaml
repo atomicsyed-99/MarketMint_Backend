@@ -1,0 +1,16 @@
+name: composition
+version: "1.1"
+type: foundation
+fragments:
+  default: |
+    <composition>
+    Hierarchy: Garment > Model > Scene.
+    Framing must strictly avoid occluding key garment details (neckline, hem, cuffs).
+    Ensure the subject is centered or balanced according to rule of thirds, with clean negative space.
+    </composition>
+  ad: |
+    <composition>
+    Product is the sharpest and most prominent object. Foreground adds depth.
+    Background supports hierarchy without competing. Negative space is intentional.
+    Rule of thirds for balance. Clean areas reserved for text placement when needed.
+    </composition>

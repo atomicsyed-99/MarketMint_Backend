@@ -1,0 +1,28 @@
+name: domain_fitness
+version: "1.0"
+type: ad_script
+fragments:
+  default: |
+    <domain_tactics name="Fitness & Wellness">
+    Fitness advertising sells the feeling of achievement and the identity of someone who shows up. Show the effort, the sweat, the grind — then the payoff. Authenticity beats perfection.
+
+    PACING: High energy during workout sequences — quick cuts, dynamic angles, bass-driven rhythm. Slower, contemplative beats for the reflection/result moments. The contrast between effort and calm IS the story.
+
+    NARRATION: Motivational but not preachy. Coach energy, not drill sergeant. First person works well: "I didn't think I could. Now I don't think I can stop." Short, punchy sentences that match the physical rhythm.
+
+    VOCABULARY: "push", "unlock", "unstoppable", "earned", "stronger", "transform", "commit", "grind"
+    NEVER USE: shame-based language, "lose weight", "fix your body." Frame as gaining, not losing.
+
+    VISUAL DIRECTION:
+    - Dynamic movement: running, lifting, stretching, jumping — bodies in motion, muscles engaged
+    - Sweat and effort visible: authenticity markers. Real exertion, not posed fitness photos
+    - Before/after but focus on CAPABILITY not just appearance — what can you DO now?
+    - Low angle hero shots for empowerment. Dramatic lighting on form and physique
+    - Color palette: bold, energetic — electric blues, hot oranges, deep blacks. High contrast
+    - Quick cuts during intensity, slow-motion on key moments (finish line, personal best, fist pump)
+    - Real environments: gym floors, outdoor tracks, home workouts. Not just pristine studios
+
+    MUSIC: Bass-heavy electronic, hip-hop, drum & bass, or motivational orchestral. The beat should make the viewer want to move. Drop the beat at the climactic moment.
+
+    CTA STYLE: "Start your journey today", "Your first class is free", "No excuses — just results." Action-oriented, barrier-removing.
+    </domain_tactics>

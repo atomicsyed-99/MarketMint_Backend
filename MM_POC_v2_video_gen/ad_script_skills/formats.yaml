@@ -1,0 +1,220 @@
+name: formats
+version: "4.0"
+type: ad_script
+fragments:
+  hook_driven:
+    text: |
+      <commercial_format name="Hook-Driven / Viral">
+      Structure: Hook → Retain → Reward
+
+      The first 3 seconds ARE the ad. Lead with your most powerful visual or provocative statement. If viewers don't stop scrolling in the first beat, nothing else matters. Optimized for TikTok, Reels, Shorts.
+
+      Scene flow:
+      1. HOOK (0-3s): Most shocking/intriguing/beautiful visual or statement — a single bold moment, NOT a transition or costume change
+      2. RETAIN (3-8s): Build on the hook, maintain curiosity, reveal more of the story
+      3. REWARD (8s-end): Satisfying payoff + product reveal + CTA
+
+      Visual direction: Vertical format (9:16), bold framing, high energy, authentic/raw aesthetic over polished production. Each scene is a single continuous shot.
+      </commercial_format>
+    scene_types:
+      - slug: viral_hook
+        role: hook
+        visual: "Most shocking, intriguing, or beautiful visual, bold framing, high energy, stop-the-scroll moment, single continuous shot"
+        allowed_actions: [excited_present, hold_product_up, wave_hello, confident_stand]
+        video_hints:
+          motion: action
+          camera: handheld
+          style: raw_video
+      - slug: retain_build
+        role: build
+        visual: "Build on the hook, maintain curiosity, reveal more, dynamic movement within a single continuous shot"
+        allowed_actions: [walk_forward, product_inspect, fabric_touch, wear_and_adjust, gentle_twirl]
+        video_hints:
+          motion: action
+          camera: tracking
+          style: raw_video
+      - slug: reward_cta
+        role: cta
+        visual: "Satisfying payoff, product reveal, dramatic moment, CTA"
+        allowed_actions: [nod_and_point, hold_product_up, confident_stand, talk_to_camera]
+        video_hints:
+          motion: reveal
+          camera: dolly_in
+          style: editorial_video
+
+  lifestyle:
+    text: |
+      <commercial_format name="Lifestyle / Aspirational">
+      Structure: Everyday moment → Product in life → Movement → Soft close
+
+      Build the ad from several short, believable slices of life. The product appears naturally inside the routine rather than as a hard-sell hero shot. Favor small actions and quick moments over one big performance.
+
+      Scene flow:
+      1. Open on a grounded lifestyle moment or location cue
+      2. Show an everyday-use action relevant to the product or audience
+      3. Bring the product closer into focus in context
+      4. Show motion, drape, or behavior in real life
+      5. End on a soft closing beat with product visibility
+
+      Visual direction: Grounded lifestyle realism, readable backgrounds, natural light, and short 2-3 second moments when supported by the model. No hard sells, no price mentions. Each scene is a single continuous shot.
+      </commercial_format>
+    scene_types:
+      - slug: ambient_establishing
+        role: opener
+        primary_category: locomotion
+        visual: "Quick opening lifestyle beat, readable environment, product may be subtle or partially visible, no staged stop-the-scroll hook"
+        allowed_actions: [walk_forward, walk_and_pause, look_up_smile]
+        video_hints:
+          motion: cinematic
+          camera: tracking
+          style: editorial_video
+      - slug: everyday_use_moment
+        role: build
+        primary_category: garment_interaction
+        visual: "Short everyday action relevant to the use case, such as adjusting an outfit, sipping coffee, checking a phone, or interacting naturally with the product"
+        allowed_actions: [sip_drink, check_phone, drive_car, wear_and_adjust]
+        domain_overrides:
+          fashion: [wear_and_adjust, hair_touch, relaxed_lean]
+          beauty: [hair_touch, look_up_smile, relaxed_lean]
+          food: [sip_drink, seated_casual, relaxed_lean]
+          tech: [check_phone, seated_casual, relaxed_lean]
+          fitness: [confident_stand, relaxed_lean, walk_and_pause]
+        video_hints:
+          motion: natural_human
+          camera: handheld
+          style: raw_video
+      - slug: product_in_context
+        role: build
+        primary_category: product_focus
+        visual: "Product appears naturally in use, medium or close-up shot, real-world context, specific detail now readable"
+        allowed_actions: [fabric_touch, product_inspect, wear_and_adjust]
+        domain_overrides:
+          fashion: [fabric_touch, product_inspect, wear_and_adjust]
+          beauty: [product_inspect, hair_touch, look_up_smile]
+          food: [sip_drink, product_inspect, seated_casual]
+          tech: [product_inspect, check_phone, seated_casual]
+          fitness: [product_inspect, confident_stand, walk_forward]
+        video_hints:
+          motion: reveal
+          camera: dolly_in
+          style: editorial_video
+      - slug: lifestyle_moment
+        role: build
+        primary_category: body_movement
+        visual: "Show the product in motion within real life, with one clear dynamic action and believable body mechanics — this scene should feel kinetically different from all others"
+        allowed_actions: [gentle_twirl, over_shoulder_turn, walk_and_pause, hair_touch]
+        domain_overrides:
+          fashion: [gentle_twirl, over_shoulder_turn, walk_and_pause]
+          beauty: [over_shoulder_turn, gentle_twirl, hair_touch]
+          food: [sip_drink, walk_and_pause, relaxed_lean]
+          tech: [walk_and_pause, check_phone, relaxed_lean]
+          fitness: [walk_and_pause, confident_stand, relaxed_lean]
+        video_hints:
+          motion: cinematic
+          camera: tracking
+          style: editorial_video
+      - slug: brand_cta
+        role: cta
+        primary_category: static_pose
+        visual: "Soft closing beat, product clearly visible, natural pause at the end, no aggressive CTA"
+        allowed_actions: [confident_stand, look_up_smile, nod_and_point, relaxed_lean]
+        video_hints:
+          motion: slow_motion
+          camera: static
+          style: editorial_video
+
+  ugc:
+    text: |
+      <commercial_format name="UGC / Creator-Style">
+      Structure: One continuous video of a creator speaking to camera, built via Veo extension chaining.
+
+      A single keyframe establishes the creator + product. The creator narrates naturally — each scene extends the previous one so the final stitched video feels like one unbroken take of an influencer endorsing the product.
+
+      Pipeline:
+      1. ONE keyframe image is generated (the creator holding/wearing the product)
+      2. GPT refines user prompts into Veo-optimized narration segments
+      3. Scene 1: image-to-video with the keyframe + first narration segment
+      4. Scenes 2+: each extends the previous video with the next narration segment
+
+      Narration rules:
+      - Each segment must be SHORT ENOUGH to finish naturally within the clip duration (1-2 short sentences for 8s)
+      - Dialogue that gets cut off mid-sentence causes audio hallucination artifacts
+      - The creator speaks in a casual, enthusiastic influencer tone
+      - Use parenthetical action cues for delivery: "(smiling, holding product up)"
+
+      Visual direction: Phone-camera POV, eye-level, natural/indoor lighting, casual setting. Realistic body language — subtle hand gestures, slight head tilts, natural eye contact. The creator moves like a real person filming a selfie/tripod video. Consistent ambient audio across all scenes, no music unless requested. Each extension picks up exactly where the previous scene left off.
+      </commercial_format>
+    scene_types:
+      - slug: creator_open
+        role: hook
+        visual: "Creator facing camera, energetic natural opener, phone-camera feel, natural indoor lighting"
+        allowed_actions: [talk_to_camera, excited_present, wave_hello]
+        video_hints:
+          motion: action
+          camera: handheld
+          style: raw_video
+      - slug: creator_body
+        role: build
+        visual: "Creator continues speaking to camera, showing or interacting with product, natural gestures"
+        allowed_actions: [talk_to_camera, hold_product_up, fabric_touch, product_inspect, wear_and_adjust]
+        video_hints:
+          motion: action
+          camera: handheld
+          style: raw_video
+      - slug: creator_close
+        role: cta
+        visual: "Creator wraps up with casual recommendation, product visible, authentic sign-off"
+        allowed_actions: [talk_to_camera, nod_and_point, excited_present]
+        video_hints:
+          motion: action
+          camera: static
+          style: raw_video
+
+  ugc_legacy:
+    text: |
+      <commercial_format name="UGC Legacy / Multi-Keyframe Creator">
+      Structure: Hook → Show → Prove → CTA
+
+      Phone-camera aesthetic with a real person talking directly to the audience. Authenticity over production value. The creator IS the ad — their genuine enthusiasm and honest reaction sells the product. Every scene maintains the same informal, first-person POV.
+
+      Scene flow:
+      1. Creator grabs attention — energetic opener, direct eye contact, "you need to see this" energy
+      2. Product reveal — creator shows the product, holds it up, points out what makes it special
+      3. Product in use — creator wearing/using the product, showing details with genuine reaction
+      4. Casual CTA — creator wraps up with recommendation, "link in bio" energy, authentic sign-off
+
+      Visual direction: Phone-camera POV throughout, natural/indoor lighting, casual setting (bedroom, living room, outdoors), slightly shaky authentic feel, no studio polish. Give each spoken scene enough time to complete one whole thought before the clip ends. Each scene is a single continuous shot — NO transitions, costume changes, or jump cuts.
+      </commercial_format>
+    scene_types:
+      - slug: creator_hook
+        role: hook
+        visual: "Close-up, creator talking directly to camera, energetic opener, phone-camera feel, natural indoor lighting"
+        allowed_actions: [talk_to_camera, excited_present, wave_hello, seated_casual]
+        video_hints:
+          motion: action
+          camera: handheld
+          style: raw_video
+      - slug: product_reveal
+        role: build
+        visual: "Creator holds up product, points out features, genuine excitement, phone-camera POV, natural lighting"
+        allowed_actions: [hold_product_up, fabric_touch, product_inspect, wear_and_adjust]
+        video_hints:
+          motion: action
+          camera: handheld
+          style: raw_video
+      - slug: product_demo
+        role: build
+        visual: "Creator wearing/using the product, showing fit/quality/details with genuine reaction"
+        allowed_actions: [gentle_twirl, walk_forward, over_shoulder_turn, wear_and_adjust, confident_stand]
+        video_hints:
+          motion: action
+          camera: handheld
+          style: raw_video
+      - slug: creator_cta
+        role: cta
+        visual: "Creator back to camera, casual recommendation, product visible, informal CTA, authentic sign-off"
+        allowed_actions: [talk_to_camera, nod_and_point, excited_present, relaxed_lean]
+        video_hints:
+          motion: action
+          camera: static
+          style: raw_video

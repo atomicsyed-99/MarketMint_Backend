@@ -1,0 +1,26 @@
+# Subject classification for ad video pipeline
+# Only ad-relevant subjects retained
+
+- slug: influencer
+  label: "Influencer / Model"
+  framing_hint: "3/4 body or full body, lifestyle context visible, aspirational setting"
+  focus_hint: "Face and outfit in sharp focus, environmental context slightly soft"
+  composition_hint: "Dynamic pose, leading lines toward subject, lifestyle context (cafe, street, studio)"
+
+- slug: product
+  label: "Product"
+  framing_hint: "Product fills 60-80% of frame, 3/4 angle showing top and front, hero angle"
+  focus_hint: "Tack-sharp across entire product, every detail and texture visible, f/8-f/11"
+  composition_hint: "Product as sole hero, clean or contextual background, subtle shadow for grounding"
+
+- slug: food
+  label: "Food / Drink"
+  framing_hint: "45-degree hero shot, steam/freshness visible, appetizing angle"
+  focus_hint: "Sharp on hero dish, selective focus on garnish details, shallow DOF for background elements"
+  composition_hint: "45-degree hero shot or overhead, complementary props (utensils, napkin), rule of odds"
+
+- slug: fashion
+  label: "Fashion Item"
+  framing_hint: "Garment shown on a model (full body or 3/4), fabric movement and drape visible, never flat lay or isolated product"
+  focus_hint: "Fabric texture sharp, stitching details visible, true-to-life material rendering, model's expression and posture complement the outfit"
+  composition_hint: "Model is hero wearing the garment, aspirational setting, consistent lighting across fabric and skin tones"

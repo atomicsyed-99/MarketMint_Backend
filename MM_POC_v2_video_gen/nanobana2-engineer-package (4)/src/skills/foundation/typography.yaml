@@ -1,0 +1,29 @@
+name: typography
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    <typography>
+    Treat text as a deliberate graphical element, not a last-minute overlay.
+    Ensure high contrast and readability through size, weight, and placement — not font gimmicks.
+    Text must feel integrated into the scene: follow perspective, receive/cast subtle light.
+    Never place text over the subject's face or primary product logo.
+    </typography>
+  editorial: |
+    <typography>
+    Magazine-quality typography. Every typeface must look art-directed, not default.
+    Luxury/Fashion: ultra-high-contrast didone serifs — hairline horizontals, thick verticals (Didot, Bodoni 72) — or tapered humanist sans with no true serifs (Optima). Wide tracking. Weight contrast between headline and subtext.
+    Romantic/Couture: transitional serifs with swash variants (Playfair Display) or fine-stroked calligraphic italic serifs (Cormorant Garamond). Bold display weight paired with light italic.
+    Minimal/Modern: neutral grotesque sans at ultra-thin or hairline weight (Neue Haas Grotesk) with extreme letter-spacing. No decorative elements.
+    Sport/Urgency: extra-condensed gothic sans (Knockout), compressed vertical rhythm, tight kerning.
+    Never render a generic slab-serif, Times-style web serif, or default system font.
+    Hairline rule separator between headline and subtext is a luxury magazine signature — use it.
+    Never place text over the subject's face or primary product logo.
+    </typography>
+  banner: |
+    <typography>
+    Large-format typography optimized for distance legibility and visual impact.
+    Text hierarchy: extra-large headline, medium offer/subhead, smaller supporting text.
+    High contrast against background. Brand fonts used when provided.
+    Physically grounded: text follows scene perspective and casts/receives subtle light.
+    </typography>

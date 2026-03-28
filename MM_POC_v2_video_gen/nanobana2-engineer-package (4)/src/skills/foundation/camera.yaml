@@ -1,0 +1,19 @@
+name: camera
+version: "1.1"
+type: foundation
+fragments:
+  default: |
+    <camera>
+    Full-body fashion frame with natural perspective and realistic depth of field.
+    Ensure subject is sharply focused with appropriate separation from background.
+    </camera>
+  lifestyle: |
+    <camera>
+    Natural lifestyle framing: environmental context with balanced subject emphasis.
+    Use realistic focal lengths (35mm-50mm equivalent) for a candid, in-situ feel.
+    </camera>
+  studio: |
+    <camera>
+    Clean studio framing: controlled perspective (50mm-85mm equivalent) with commercial product focus.
+    Keep vertical lines straight and geometry distortion-free.
+    </camera>

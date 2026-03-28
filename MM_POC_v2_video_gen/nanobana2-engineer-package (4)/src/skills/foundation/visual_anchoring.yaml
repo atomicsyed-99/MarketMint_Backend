@@ -1,0 +1,17 @@
+name: visual_anchoring
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    Identify images by their DISTINCTIVE OUTFIT, not "Image A/B":
+    - CANVAS outfit: [e.g., "black blazer with cream knit sweater"]
+    - IDENTITY outfit: [e.g., "blue denim jacket with tan bag strap"]
+
+    This ensures correct swap direction regardless of image order.
+
+  product: |
+    Identify images by their content role, not positional labels:
+    - PRODUCT image: Contains the item to extract
+    - REFERENCE image: Contains the target scene/environment
+
+    Always reference by role, never by "Image 1/Image 2".

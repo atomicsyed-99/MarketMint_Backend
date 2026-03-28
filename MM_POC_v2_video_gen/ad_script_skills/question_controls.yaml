@@ -1,0 +1,445 @@
+name: question_controls
+version: "1.0"
+type: ad_script
+fragments:
+  lifestyle:
+    general:
+      questions:
+        - id: lifestyle_setting
+          question: Where should the ad feel like it takes place?
+          options:
+            - id: bright_home
+              label: Bright home setting
+              description: Warm, lived-in indoor space with natural light
+              mappings:
+                shared:
+                  setting_template: bright_home
+                  lighting_template: natural_window_light
+            - id: outdoor_walkway
+              label: Outdoor walkway
+              description: Open-air approach shot with readable surroundings
+              mappings:
+                shared:
+                  setting_template: outdoor_walkway
+                  lighting_template: daylight_exterior
+        - id: lifestyle_closing
+          question: How should the ad end?
+          options:
+            - id: soft_portrait
+              label: Soft portrait close
+              description: Calm closing frame with natural product visibility
+              mappings:
+                scenes:
+                  brand_cta:
+                    action: confident_stand
+                    closing_template: soft_portrait
+            - id: relaxed_finish
+              label: Relaxed natural finish
+              description: Easy end beat with low-key energy
+              mappings:
+                scenes:
+                  brand_cta:
+                    action: relaxed_lean
+                    closing_template: relaxed_finish
+    fashion:
+      questions:
+        - id: lifestyle_setting
+          question: Where should the ad feel like it takes place?
+          options:
+            - id: festive_home_entrance
+              label: Festive home entrance
+              description: Kolam, doorway decor, warm Pongal welcome
+              mappings:
+                shared:
+                  setting_template: festive_home_entrance
+                  lighting_template: warm_festive_daylight
+                scenes:
+                  ambient_establishing:
+                    environment_template: festive_home_entrance
+                  brand_cta:
+                    environment_template: festive_home_entrance
+            - id: temple_corridor
+              label: Temple corridor
+              description: Festive outing mood with graceful movement
+              mappings:
+                shared:
+                  setting_template: temple_corridor
+                  lighting_template: shaded_daylight
+                scenes:
+                  ambient_establishing:
+                    environment_template: temple_corridor
+                  lifestyle_moment:
+                    environment_template: temple_corridor
+            - id: sunlit_indoor_corner
+              label: Sunlit indoor corner
+              description: Soft natural light for detail-led fashion scenes
+              mappings:
+                shared:
+                  setting_template: sunlit_indoor_corner
+                  lighting_template: soft_window_light
+                scenes:
+                  everyday_use_moment:
+                    environment_template: sunlit_indoor_corner
+                  product_in_context:
+                    environment_template: sunlit_indoor_corner
+            - id: festive_courtyard
+              label: Courtyard with kolam
+              description: Open festive backdrop with more motion space
+              mappings:
+                shared:
+                  setting_template: festive_courtyard
+                  lighting_template: bright_morning_daylight
+                scenes:
+                  ambient_establishing:
+                    environment_template: festive_courtyard
+                  lifestyle_moment:
+                    environment_template: festive_courtyard
+        - id: lifestyle_everyday_moment
+          question: What should the everyday-use moment be?
+          options:
+            - id: adjust_before_outing
+              label: Adjust before stepping out
+              description: Natural get-ready beat that shows the fit
+              mappings:
+                scenes:
+                  everyday_use_moment:
+                    action: wear_and_adjust
+                    scene_template: getting_ready
+            - id: touch_hair_get_ready
+              label: Touch hair and get ready
+              description: Soft personal beat before the celebration
+              mappings:
+                scenes:
+                  everyday_use_moment:
+                    action: hair_touch
+                    scene_template: pre_event_touchup
+            - id: relaxed_pause
+              label: Relaxed festive pause
+              description: Minimal-motion beat in a real setting
+              mappings:
+                scenes:
+                  everyday_use_moment:
+                    action: relaxed_lean
+                    scene_template: relaxed_festive_pause
+            - id: quick_glance_outing
+              label: Quick glance before the celebration
+              description: Casual moment before heading out
+              mappings:
+                scenes:
+                  everyday_use_moment:
+                    action: check_phone
+                    scene_template: before_heading_out
+        - id: lifestyle_detail_focus
+          question: What detail should the ad bring into focus?
+          options:
+            - id: embroidery_closeup
+              label: Embroidery close-up
+              description: Make the festive craft details clearly readable
+              mappings:
+                scenes:
+                  product_in_context:
+                    action: fabric_touch
+                    detail_focus: embroidery_closeup
+            - id: full_silhouette
+              label: Full outfit silhouette
+              description: Show the overall look and shape in context
+              mappings:
+                scenes:
+                  product_in_context:
+                    action: wear_and_adjust
+                    detail_focus: full_outfit_silhouette
+            - id: fabric_and_drape
+              label: Fabric and drape
+              description: Emphasize feel, movement, and material quality
+              mappings:
+                scenes:
+                  product_in_context:
+                    action: fabric_touch
+                    detail_focus: fabric_and_drape
+            - id: neckline_and_sleeves
+              label: Neckline and sleeve work
+              description: Focus on crafted finishing details
+              mappings:
+                scenes:
+                  product_in_context:
+                    action: product_inspect
+                    detail_focus: neckline_and_sleeves
+        - id: lifestyle_motion_beat
+          question: What motion beat should sell the outfit?
+          options:
+            - id: gentle_twirl
+              label: Gentle twirl
+              description: Show drape and movement in a simple beat
+              mappings:
+                scenes:
+                  lifestyle_moment:
+                    action: gentle_twirl
+                    motion_template: soft_twirling_motion
+            - id: walk_and_pause
+              label: Walk and pause
+              description: Natural movement with a graceful settle
+              mappings:
+                scenes:
+                  lifestyle_moment:
+                    action: walk_and_pause
+                    motion_template: natural_walk_pause
+            - id: over_shoulder_turn
+              label: Over-shoulder turn
+              description: Show profile and outfit shape from another angle
+              mappings:
+                scenes:
+                  lifestyle_moment:
+                    action: over_shoulder_turn
+                    motion_template: profile_turn_reveal
+        - id: lifestyle_closing
+          question: How should the ad end?
+          options:
+            - id: soft_smile
+              label: Soft smile to camera
+              description: Warm festive end frame with gentle energy
+              mappings:
+                scenes:
+                  brand_cta:
+                    action: look_up_smile
+                    closing_template: soft_smile
+            - id: confident_portrait
+              label: Confident still portrait
+              description: Clean closing frame with full outfit readability
+              mappings:
+                scenes:
+                  brand_cta:
+                    action: confident_stand
+                    closing_template: confident_portrait
+            - id: relaxed_lean_close
+              label: Relaxed lean with full outfit visible
+              description: Casual close with understated style
+              mappings:
+                scenes:
+                  brand_cta:
+                    action: relaxed_lean
+                    closing_template: relaxed_lean_close
+  ugc:
+    general:
+      questions:
+        - id: ugc_creator_persona
+          question: What kind of creator should this feel like?
+          options:
+            - id: excited_friend
+              label: Excited friend recommending it
+              description: High-energy creator with direct enthusiasm
+              mappings:
+                shared:
+                  creator_persona: excited_friend
+            - id: calm_reviewer
+              label: Calm honest reviewer
+              description: Lower-key delivery with trustworthy tone
+              mappings:
+                shared:
+                  creator_persona: calm_reviewer
+        - id: ugc_cta_style
+          question: How should the creator close?
+          options:
+            - id: soft_recommendation
+              label: Soft recommendation
+              description: Casual close with a natural sign-off
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: talk_to_camera
+                    cta_template: soft_recommendation
+            - id: urgency_close
+              label: Sale urgency
+              description: Stronger nudge to act soon
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: nod_and_point
+                    cta_template: urgency_close
+    fashion:
+      questions:
+        - id: ugc_creator_persona
+          question: What kind of creator should this feel like?
+          options:
+            - id: excited_friend
+              label: Excited friend recommending it
+              description: Fast, expressive, direct-to-camera energy
+              mappings:
+                shared:
+                  creator_persona: excited_friend
+                  hook_style: energetic_direct_hook
+                scenes:
+                  creator_hook:
+                    action: excited_present
+            - id: calm_stylish_creator
+              label: Calm stylish creator
+              description: Composed delivery with fashion-first confidence
+              mappings:
+                shared:
+                  creator_persona: calm_stylish_creator
+                  hook_style: poised_direct_hook
+                scenes:
+                  creator_hook:
+                    action: talk_to_camera
+            - id: festive_fashion_enthusiast
+              label: Festive fashion enthusiast
+              description: Creator who leans into Pongal-ready styling
+              mappings:
+                shared:
+                  creator_persona: festive_fashion_enthusiast
+                  hook_style: festive_style_hook
+                scenes:
+                  creator_hook:
+                    action: wave_hello
+            - id: simple_honest_reviewer
+              label: Simple honest reviewer
+              description: Minimal gestures, practical recommendation tone
+              mappings:
+                shared:
+                  creator_persona: simple_honest_reviewer
+                  hook_style: straightforward_review_hook
+                scenes:
+                  creator_hook:
+                    action: talk_to_camera
+        - id: ugc_framework
+          question: What angle should the creator use?
+          options:
+            - id: aida
+              label: AIDA - attention to desire
+              description: Strong hook, build interest, create want, then CTA
+              mappings:
+                shared:
+                  framework: aida
+                  copy_template_family: ugc_aida
+            - id: pas
+              label: PAS - start from the problem
+              description: Lead with pain point, then relief and CTA
+              mappings:
+                shared:
+                  framework: pas
+                  copy_template_family: ugc_pas
+            - id: fab
+              label: FAB - feature and benefit
+              description: Lead with feature, explain why it matters
+              mappings:
+                shared:
+                  framework: fab
+                  copy_template_family: ugc_fab
+        - id: ugc_main_highlight
+          question: What should the creator highlight most?
+          options:
+            - id: embroidery_details
+              label: Embroidery and festive details
+              description: Focus on the crafted visual details
+              mappings:
+                scenes:
+                  product_reveal:
+                    action: hold_product_up
+                    detail_focus: embroidery_details
+                  product_demo:
+                    action: fabric_touch
+                    detail_focus: embroidery_details
+            - id: comfort_cotton_feel
+              label: Comfort and cotton feel
+              description: Highlight wearability and soft fabric feel
+              mappings:
+                scenes:
+                  product_reveal:
+                    action: product_inspect
+                    detail_focus: cotton_feel
+                  product_demo:
+                    action: wear_and_adjust
+                    detail_focus: comfort_in_motion
+            - id: flattering_full_look
+              label: How flattering the full look is
+              description: Sell the overall silhouette and styling
+              mappings:
+                scenes:
+                  product_reveal:
+                    action: hold_product_up
+                    detail_focus: full_look
+                  product_demo:
+                    action: wear_and_adjust
+                    detail_focus: full_look
+            - id: easy_pongal_outing
+              label: How easy it is for Pongal outings
+              description: Emphasize festive usefulness in real life
+              mappings:
+                scenes:
+                  product_reveal:
+                    action: product_inspect
+                    detail_focus: festive_outing_readiness
+                  product_demo:
+                    action: wear_and_adjust
+                    detail_focus: festive_outing_readiness
+        - id: ugc_cta_style
+          question: How should the creator close?
+          options:
+            - id: soft_recommendation
+              label: Soft recommendation
+              description: Casual close with a warm endorsement
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: talk_to_camera
+                    cta_template: soft_recommendation
+            - id: sale_urgency
+              label: Sale urgency
+              description: Push the Pongal sale timing more directly
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: nod_and_point
+                    cta_template: sale_urgency
+            - id: compliment_angle
+              label: Outfit compliment angle
+              description: Frame the CTA around how good the outfit looks
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: excited_present
+                    cta_template: compliment_angle
+            - id: direct_buy_now
+              label: Direct buy-now push
+              description: More explicit shopping CTA for conversion
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: nod_and_point
+                    cta_template: direct_buy_now
+  ugc_legacy:
+    general:
+      questions:
+        - id: ugc_creator_persona
+          question: What kind of creator should this feel like?
+          options:
+            - id: excited_friend
+              label: Excited friend recommending it
+              description: High-energy creator with direct enthusiasm
+              mappings:
+                shared:
+                  creator_persona: excited_friend
+            - id: calm_reviewer
+              label: Calm honest reviewer
+              description: Lower-key delivery with trustworthy tone
+              mappings:
+                shared:
+                  creator_persona: calm_reviewer
+        - id: ugc_cta_style
+          question: How should the creator close?
+          options:
+            - id: soft_recommendation
+              label: Soft recommendation
+              description: Casual close with a natural sign-off
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: talk_to_camera
+                    cta_template: soft_recommendation
+            - id: urgency_close
+              label: Sale urgency
+              description: Stronger nudge to act soon
+              mappings:
+                scenes:
+                  creator_cta:
+                    action: nod_and_point
+                    cta_template: urgency_close

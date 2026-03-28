@@ -1,0 +1,20 @@
+name: brand_consistency
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    <brand_consistency>
+    When brand memory is provided, integrate brand elements naturally:
+    Use brand colors in atmospheric elements (lighting tints, environment accents, surface colors).
+    Use brand fonts for all typography hierarchy. Brand personality informs emotional tone.
+    Overall visual should be recognizable as the brand without being heavy-handed.
+    </brand_consistency>
+  strict: |
+    <brand_consistency>
+    Strict brand compliance checklist:
+    2-4 brand colors prominently and visibly used (not subtle hints).
+    Brand fonts specified by exact family name for all text.
+    Lighting quality matches brand scene aesthetics.
+    Mood and composition style cohesive with brand identity.
+    Overall visual immediately recognizable as same brand. This is NOT optional.
+    </brand_consistency>

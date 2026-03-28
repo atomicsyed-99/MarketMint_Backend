@@ -1,0 +1,17 @@
+name: human_realism
+version: "1.2"
+type: foundation
+fragments:
+  default: |
+    <skin_realism>
+    Anatomically correct: natural facial proportions, realistic neck/shoulder transitions, clean hands with correct finger count.
+    Natural skin texture: visible pores, vellus hair, subtle fine lines, and natural skin translucency (subsurface scattering).
+    Even, healthy complexion with subtle sheen and realistic color variation; avoid waxy, plastic, or airbrushed smoothing.
+    Keep natural facial asymmetry; avoid uncanny symmetry or malformed features.
+    </skin_realism>
+  studio: |
+    <skin_realism>
+    Luxury editorial realism: controlled studio lighting, natural skin translucency, and believable texture.
+    Clean, commercial complexion with visible pores and micro-contrast; avoid over-retouched or mannequin-like smoothness.
+    Retain natural asymmetry and true skin tones under soft, high-quality lighting.
+    </skin_realism>

@@ -1,0 +1,12 @@
+name: negative_prompts
+version: "1.0"
+type: foundation
+fragments:
+  realism: |
+    plastic skin, airbrushed, oversmoothed, artificial glow, fake skin, HDR halos, blur, low quality, watermark
+  typography: |
+    distorted text, messy copy, illegible font, text over face, floating text
+  composition: |
+    floating objects, mismatched lighting, generic backgrounds, flat lighting, lifeless composition, template aesthetics
+  commercial: |
+    plastic skin, airbrushed, oversmoothed, fake skin, distorted text, messy copy, floating objects, mismatched lighting, HDR halos, blur, low quality, watermark, split-panel composition, blurred background panel, bokeh text zone, hard vertical split, blurred half, vignette border

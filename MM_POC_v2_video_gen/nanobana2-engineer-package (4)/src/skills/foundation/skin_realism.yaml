@@ -1,0 +1,18 @@
+name: skin_realism
+version: "1.0"
+type: foundation
+fragments:
+  default: |
+    <skin_realism>
+    Natural skin texture: visible pores, fine lines, soft peach fuzz, subtle micro-imperfections.
+    Skin should look hydrated and radiant (healthy satin finish), not reflective plastic or matte.
+    Strategic highlights on cheekbones, nose bridge, forehead — natural light on moisturized skin.
+    Use large soft light sources for gentle gradients. Catch lights in eyes subtle and logically placed.
+    Hands: correct physics of touch, slight skin indentation at contact, realistic contact shadows.
+    </skin_realism>
+  premium: |
+    <skin_realism>
+    Premium commercial skin: radiant, luminous, and healthy — glossy skin is the desired look.
+    Visible pores and fine texture preserved. Break AI symmetry while maintaining premium quality.
+    Only add imperfections if they enhance believability. Clean even skin tone with realistic warmth.
+    </skin_realism>

@@ -1,0 +1,15 @@
+# Grok Imagine Video — Video Style taxonomy
+# Prompt keywords derived from awesome-grok-imagine-prompts (tested recipes)
+# Each style_hint is written in Grok's prompt language, not human prose
+
+- slug: cinematic_video
+  label: "Cinematic Film"
+  style_hint: "natural contrast, soft highlight rolloff, restrained depth of field, realistic color separation, steady 24fps motion"
+
+- slug: editorial_video
+  label: "Editorial / Clean"
+  style_hint: "clean light, neutral color balance, precise framing, balanced exposure, polished but believable detail"
+
+- slug: raw_video
+  label: "Raw / Authentic"
+  style_hint: "available light, natural color, subtle handheld energy, minimal processing, authentic everyday texture"
