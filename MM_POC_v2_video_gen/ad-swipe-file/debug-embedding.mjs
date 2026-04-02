@@ -5,7 +5,8 @@
 import sharp from 'sharp';
 import fs from 'fs/promises';
 
-const API_KEY = 'REDACTED_API_KEY';
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) throw new Error('GEMINI_API_KEY env var is required');
 const BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 
 const TEST_IMAGE = '/home/jai/work/marketmint/V1/MM_BD/MarketMint_Backend/MM_POC_v2_video_gen/Template_images/downloaded_images/0189f41d-ddc61.png';
