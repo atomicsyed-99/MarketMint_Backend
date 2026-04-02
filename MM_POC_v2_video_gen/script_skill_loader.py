@@ -86,33 +86,12 @@ class AdScriptSkillLoader:
         """Format all script skills into a taxonomy block for the LLM system prompt."""
         lines = []
 
-        # Frameworks
-        if "frameworks" in self.skills_data:
-            lines.append("## SCRIPT FRAMEWORKS (pick one slug):")
-            for variant in self.skills_data["frameworks"]:
-                lines.append(f"  - {variant}")
-
         # Formats
         if "formats" in self.skills_data:
-            lines.append("\n## COMMERCIAL FORMATS (pick one slug):")
+            lines.append("## COMMERCIAL FORMATS (pick one slug):")
             for variant in self.skills_data["formats"]:
                 if variant not in _DISABLED_FORMATS:
                     lines.append(f"  - {variant}")
-
-        # Emotional triggers
-        if "emotional_triggers" in self.skills_data:
-            lines.append("\n## EMOTIONAL TRIGGERS (pick one slug):")
-            for variant in self.skills_data["emotional_triggers"]:
-                lines.append(f"  - {variant}")
-
-        # Domains
-        domain_skills = [s for s in self.skills_data if s.startswith("domain_")]
-        if domain_skills:
-            lines.append("\n## DOMAIN (pick one slug, or 'general' if none fit):")
-            for skill in sorted(domain_skills):
-                domain_name = skill.replace("domain_", "")
-                lines.append(f"  - {domain_name}")
-            lines.append("  - general")
 
         # Pacing (auto-selected, shown for reference)
         if "pacing" in self.skills_data:
@@ -124,13 +103,11 @@ class AdScriptSkillLoader:
 
         return "\n".join(lines)
 
-    def get_format_scene_types(self, format_slug: str, domain: str = "") -> List[Dict]:
+    def get_format_scene_types(self, format_slug: str) -> List[Dict]:
         """Get the scene_types list for a commercial format.
 
         Returns a list of dicts with keys: slug, role, visual, video_hints,
-        allowed_actions.  When *domain* is provided and a scene_type has a
-        matching ``domain_overrides`` entry, ``allowed_actions`` is replaced
-        with the domain-specific list so the planner only sees relevant actions.
+        allowed_actions.
         """
         formats_raw = self._raw_fragments.get("formats", {})
         format_data = formats_raw.get(format_slug, {})
@@ -139,17 +116,7 @@ class AdScriptSkillLoader:
         if not isinstance(format_data, dict):
             return []
 
-        scene_types = format_data.get("scene_types", [])
-        if not domain:
-            return scene_types
-
-        resolved: List[Dict] = []
-        for st in scene_types:
-            overrides = st.get("domain_overrides", {})
-            if domain in overrides:
-                st = {**st, "allowed_actions": overrides[domain]}
-            resolved.append(st)
-        return resolved
+        return format_data.get("scene_types", [])
 
     def get_format_labels(self) -> Dict[str, str]:
         """Get format slug -> label mapping for the director prompt."""
@@ -169,27 +136,16 @@ class AdScriptSkillLoader:
                 labels[slug] = slug.replace("_", " ").title()
         return labels
 
-    def get_question_set(self, format_slug: str, domain: str = "general") -> List[Dict]:
-        """Get structured clarifying questions for a format/domain pair.
+    def get_question_set(self, format_slug: str) -> List[Dict]:
+        """Get structured clarifying questions for a format.
 
-        Falls back from the requested domain to ``general`` and then to the
-        first available question set for the format.
+        Returns an empty list when no hardcoded questions exist,
+        allowing the caller to fall through to LLM-generated questions.
         """
         controls_raw = self._raw_fragments.get("question_controls", {})
         format_controls = controls_raw.get(format_slug, {})
         if not isinstance(format_controls, dict):
             return []
-
-        candidates = []
-        if domain:
-            candidates.append(domain)
-        if "general" not in candidates:
-            candidates.append("general")
-
-        for candidate in candidates:
-            payload = format_controls.get(candidate, {})
-            if isinstance(payload, dict) and isinstance(payload.get("questions"), list):
-                return payload["questions"]
 
         for payload in format_controls.values():
             if isinstance(payload, dict) and isinstance(payload.get("questions"), list):
@@ -202,10 +158,9 @@ class AdScriptSkillLoader:
         format_slug: str,
         question_id: str,
         option_id: str,
-        domain: str = "general",
     ) -> Dict:
         """Resolve the mapping payload for one structured question option."""
-        for question in self.get_question_set(format_slug, domain):
+        for question in self.get_question_set(format_slug):
             if question.get("id") != question_id:
                 continue
             for option in question.get("options", []):

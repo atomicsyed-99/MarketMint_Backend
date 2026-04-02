@@ -76,20 +76,30 @@ class NanoBananaGenerator:
                 if user_character_image:
                     contents.append(
                         types.Part.from_text(
-                            text="Attached character reference — use this specific person as the model:"
+                            text="Attached character/model reference — this is the EXACT person who must appear in the image. "
+                            "Match their face precisely: same facial bone structure, same skin tone, same nose shape, "
+                            "same eye shape, same jawline, same lips, same hair color and texture. "
+                            "If the reference shows piercings (nose ring, earrings), include them. "
+                            "Do NOT generate a different person. The face in the output must be recognizably "
+                            "the same individual as in this reference photo. "
+                            "If a text description of the subject conflicts with this photo, follow the PHOTO:"
                         )
                     )
                     contents.append(_pil_to_part(user_character_image))
                 if subject_images:
                     contents.append(
                         types.Part.from_text(
-                            text="Attached product image — treat this as the authoritative asset reference. "
-                            "Retain the exact shape, proportions, color, materials, trim, pattern placement, "
-                            "and branding visible here. Do not redesign, simplify, or embellish it. "
-                            "If this is an asset-only image with no person, preserve the asset layout 1:1 from the reference. "
-                            "Do not shift embroidery, motifs, or design elements upward in the frame just to show them more prominently. "
-                            "Keep each detail in the same relative position on the garment or object as the reference image. "
-                            "Keep the environment behind the asset readable rather than heavily blurred. "
+                            text="Attached product image — treat this as the AUTHORITATIVE asset reference. "
+                            "Reproduce the product EXACTLY as shown: same shape, proportions, color, materials, "
+                            "trim, pattern placement, embroidery designs, and branding. "
+                            "CRITICAL: Do NOT simplify, remove, or alter any embroidery, prints, or decorative elements. "
+                            "If the reference shows embroidery or patterns on specific areas (neckline, hem, cuffs, borders), "
+                            "those same patterns must appear in the same locations with the same density and detail. "
+                            "Do not shift embroidery, motifs, or design elements to different positions on the garment. "
+                            "If a text description of the product conflicts with this photo, follow the PHOTO. "
+                            "IMPORTANT: completely IGNORE the background/environment in this reference image. "
+                            "The background here (store, studio, plain backdrop, etc.) is NOT part of the product — "
+                            "use ONLY the scene description in the prompt to determine the setting and background. "
                             "Ignore any text or overlays on it:"
                         )
                     )
@@ -109,16 +119,42 @@ class NanoBananaGenerator:
                 contents.append(
                     types.Part.from_text(
                         text=final_prompt
-                        + "\nBackground focus: keep the background visible and naturally in focus; avoid strong artificial background blur or shallow-depth portrait bokeh."
+                        + "\nBackground focus: use the setting described in the prompt above as the background; keep it visible and naturally in focus; avoid strong artificial background blur or shallow-depth portrait bokeh. Do NOT copy the background from any attached reference image."
                         + "\nAsset fidelity: if no person is present, reproduce the asset 1:1 from the reference image and keep the relative placement of neckline, hem, embroidery, motifs, seams, and labels unchanged."
                     )
                 )
             else:
                 contents = (
                     final_prompt
-                    + "\nBackground focus: keep the background visible and naturally in focus; avoid strong artificial background blur or shallow-depth portrait bokeh."
+                    + "\nBackground focus: use the setting described in the prompt above as the background; keep it visible and naturally in focus; avoid strong artificial background blur or shallow-depth portrait bokeh. Do NOT copy the background from any attached reference image."
                     + "\nAsset fidelity: if no person is present, reproduce the asset 1:1 from the reference image and keep the relative placement of neckline, hem, embroidery, motifs, seams, and labels unchanged."
                 )
+
+            # Log the full prompt sent to Gemini into the keyframes directory
+            try:
+                output_dir = os.path.dirname(os.path.abspath(output_path))
+                # If output is in scene_videos/, also log to keyframes/; otherwise log next to output
+                keyframes_dir = output_dir
+                parent = os.path.dirname(output_dir)
+                kf_candidate = os.path.join(parent, "keyframes")
+                if os.path.isdir(kf_candidate):
+                    keyframes_dir = kf_candidate
+                scene_base = os.path.splitext(os.path.basename(output_path))[0]
+                log_path = os.path.join(keyframes_dir, f"{scene_base}_gemini_prompt.txt")
+                os.makedirs(keyframes_dir, exist_ok=True)
+                with open(log_path, "w") as f:
+                    f.write("=== Gemini Image Generation — Full Input Prompt ===\n\n")
+                    if isinstance(contents, list):
+                        for i, part in enumerate(contents):
+                            if hasattr(part, "text") and part.text:
+                                f.write(f"--- Part {i} (text) ---\n{part.text}\n\n")
+                            elif hasattr(part, "inline_data") and part.inline_data:
+                                f.write(f"--- Part {i} (image: {part.inline_data.mime_type}) ---\n\n")
+                    else:
+                        f.write(str(contents))
+                print(f"    Gemini prompt logged: {log_path}")
+            except Exception as e:
+                print(f"    Warning: Could not log Gemini prompt: {e}")
 
             gen_config = types.GenerateContentConfig(
                 response_modalities=["IMAGE"],

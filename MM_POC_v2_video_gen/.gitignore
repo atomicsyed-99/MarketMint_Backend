@@ -1,8 +1,11 @@
 # Generated run outputs (videos, keyframes, storyboards, cost estimates)
 runs/
+tests/kling_exp
+Template_images
 
 # Generated frames and scene videos
 ad_frames/
+ad-swipe-file/data
 
 # Generated output directory
 output_ad/

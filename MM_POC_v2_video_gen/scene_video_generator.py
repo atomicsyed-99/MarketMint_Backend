@@ -734,6 +734,454 @@ def generate_all_scene_videos(
     return video_paths
 
 
+# ── Lifestyle: GPT-Refined Per-Scene Video Generation ───────────────────
+#
+# Mirrors the UGC prompt-refinement pattern but for lifestyle ads:
+# N keyframes → GPT 5.4 describes each keyframe → GPT 5.4 refines scene
+# prompts using the Grok Imagine prompting guide → per-scene image-to-video.
+
+_GROK_PROMPTING_GUIDE_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "Grok_imagine_prompting_guide.md",
+)
+
+_LIFESTYLE_REFINE_SYSTEM = """\
+You are a Grok Imagine video prompt engineer specializing in lifestyle \
+product advertisement videos.
+
+You will receive:
+1. The Grok Imagine prompting guide (rules for writing effective Grok video prompts)
+2. The image generation prompt used to create each scene's keyframe (the starting frame)
+3. N scene descriptions — one per scene, each with its own duration, action, \
+and camera/motion/style hints.
+
+Your job is to build N production-ready Grok Imagine image-to-video prompts — \
+one per scene — that together produce a set of polished, cinematic lifestyle \
+ad clips that will be stitched together.
+
+KEY RULES FROM THE GROK GUIDE:
+- Name your camera movement explicitly: "slow dolly in", "pan right", "static wide".
+- Name your lighting: "golden hour backlight", "overcast diffused light", etc.
+- Reference moods, not just adjectives: "Blade Runner mood" or "Studio Ghibli feel" \
+gives Grok a rich visual library.
+- Keep compositions focused: clear subject against defined background.
+- Go wider for people in video: wider shots and slower movements are cleanest.
+
+PROMPT DENSITY — CRITICAL:
+- Write RICH, LAYERED prompts. Grok has the keyframe as visual context, but it \
+needs detailed textual guidance on motion, atmosphere, and pacing to fill the \
+full duration without inventing its own actions.
+- Each prompt should describe MULTIPLE simultaneous layers of activity:
+  (a) PRIMARY ACTION: what the subject is doing (slow, continuous gesture)
+  (b) SECONDARY MICRO-MOTION: breathing, subtle weight shifts, fabric movement
+  (c) CAMERA BEHAVIOR: exact movement type, speed, and trajectory over the full clip
+  (d) ENVIRONMENTAL MOTION: breeze through hair/fabric, shifting light, \
+      background activity (leaves, curtains, distant figures)
+  (e) ATMOSPHERIC DETAIL: air quality (dust motes in light, humid haze), \
+      light behavior (dappled shadows shifting, warm glow intensifying), \
+      material responses (fabric catching light as it moves, metal glinting)
+  (f) AUDIO LANDSCAPE: specific ambient sounds — not just "ambient sound" but \
+      "distant temple bells with soft birdsong and a faint breeze through cotton"
+- The more specific and layered the prompt, the less likely Grok is to hallucinate \
+abrupt movements or unnatural action changes to fill the duration.
+
+TEMPORAL PACING — THE MOST IMPORTANT RULE:
+- Every action described must be ONGOING and CONTINUOUS throughout the entire \
+clip duration. NEVER describe an action that completes, finishes, or resolves \
+within the clip. The clip should feel like a slice cut from a longer, unbroken \
+moment.
+- BAD: "She brushes the embroidery and then looks up." — This completes two \
+actions, forcing Grok to rush through them or invent a third action to fill time.
+- BAD: "She walks to the doorway and stops." — The stop creates a dead moment \
+where Grok invents new motion to fill remaining frames.
+- GOOD: "She is mid-stride along the veranda, each step unhurried, kurta hem \
+swaying gently with her gait, one hand trailing lightly along the stone railing \
+as warm morning light shifts across the embroidery with each movement."
+- GOOD: "Her fingers are already resting on the embroidered border, tracing \
+slowly along the lotus motifs as the cotton weave catches and releases the \
+sidelight, her breathing gently lifting the fabric at the neckline."
+- Think of each scene as a WINDOW into an already-happening moment. The action \
+was already in progress when the clip began and continues beyond when it ends.
+- Use present continuous tense ("is walking", "is tracing") or mid-action \
+phrasing ("mid-stride", "continues to brush") rather than imperative starts \
+("walks", "traces", "begins to").
+- NEVER use sequential conjunctions within a single scene: no "then", "next", \
+"after that", "before", "and then". Every described element should be SIMULTANEOUS.
+- For camera movement, describe it as continuous and gradual: "camera drifts \
+steadily closer throughout" not "camera dollies in and holds".
+- End-of-clip behavior: the last described state should be an ONGOING action, \
+never a resolved pose. The clip should feel like it could continue for another \
+10 seconds without anything changing.
+
+LIFESTYLE AD RULES:
+- NO speech, NO voiceover, NO dialogue. Audio is natural ambient sound ONLY.
+- Each scene is a self-contained shot from its keyframe — no cuts, no transitions.
+- Preserve the subject, clothing, product details, and environment EXACTLY as \
+shown in the keyframe image.
+- Motion must be natural and physically plausible with stable anatomy and lighting.
+- Keep movement subtle and cinematic — lifestyle ads are about mood and aspiration, \
+not action sequences.
+- Product must remain clearly visible and recognizable throughout.
+
+FACIAL EXPRESSION AND BODY LANGUAGE — CRITICAL:
+- NEVER describe exaggerated, theatrical, or posed facial expressions. No "beaming \
+smile", "wide grin", "eyes lighting up", or "excited expression". These cause \
+uncanny, artificial faces in video generation.
+- Instead, describe SUBTLE, RELAXED micro-expressions: "soft neutral expression", \
+"hint of a smile", "calm gaze", "relaxed brow", "natural resting face with slight \
+warmth". Think candid photo, not posed portrait.
+- Body language must feel CANDID and UNPERFORMED. Describe movement as if the \
+person does not know they are being filmed: "absently adjusts sleeve", "shifts \
+weight naturally", "glances down at the fabric". Avoid choreographed-feeling \
+descriptions like "confidently poses" or "strikes a stance".
+- NEVER ask for direct eye contact with camera in lifestyle ads. The subject \
+should look at the product, the environment, or off-frame — never into the lens.
+- Hands and fingers must be described with restraint. Avoid specific finger \
+positions ("index finger traces"). Use vague, natural phrasing: "hand brushes \
+the fabric", "fingers lightly touch the embroidery". Over-specifying hand motion \
+causes distorted fingers and unnatural gestures.
+- For standing/pausing moments, describe the body as SETTLING into stillness \
+rather than HOLDING a pose. "She slows to a stop" not "she holds a confident pose".
+
+PROMPT STRUCTURE:
+Camera + lighting + mood/style reference + subject mid-action + simultaneous \
+secondary motion + environmental detail + material/light interaction + \
+atmospheric texture + specific ambient audio.
+
+CONTINUITY:
+- While each scene is independently generated from its own keyframe, the overall \
+ad must feel cohesive in tone, pacing, and visual language.
+- Use consistent lighting references and mood language across scenes.
+- Camera movements should build a visual narrative (e.g. start wide, go closer, \
+end with product reveal).
+
+EXAMPLE (for reference only — adapt to each scene):
+"Slow dolly-in drifting steadily closer throughout, clean sidelight from a high \
+window casting long warm shadows across terracotta tiles, polished editorial \
+realism with a Vogue Living sensibility. She is mid-gesture, her hand already \
+resting on the embroidered lower border and continuing to trace slowly along \
+the lotus and foliage chain motifs, the white threadwork catching and releasing \
+the sidelight as the cotton shifts under her fingertips. Her other hand rests \
+naturally on her lap, thumb absently smoothing the fabric. Gentle breathing \
+lifts the neckline subtly. A faint breeze from off-frame stirs the loose end \
+of her dupatta draped over the chair behind her. Dust motes drift through the \
+column of window light. The brass diya on the shelf behind glints as the camera \
+angle shifts. Distant temple bells with soft birdsong and the faint rustle of \
+cotton under her fingers."
+
+Output ONLY valid JSON with this exact structure:
+{
+  "prompts": [
+    {"scene": 1, "prompt": "..."},
+    {"scene": 2, "prompt": "..."},
+    ...
+  ],
+  "reasoning": "Brief explanation of refinement choices"
+}"""
+
+
+def _refine_lifestyle_prompts(
+    oai_client,
+    model: str,
+    grok_guide: str,
+    scene_descriptions: list[dict],
+) -> list[str]:
+    """Use GPT to refine scene descriptions into Grok-optimized lifestyle prompts."""
+    scenes_text = ""
+    for sd in scene_descriptions:
+        scenes_text += (
+            f"Scene {sd['scene_number']} ({sd['duration']}s):\n"
+            f"  KEYFRAME IMAGE PROMPT: {sd['image_description']}\n"
+            f"  SCENE DESCRIPTION: {sd['description']}\n"
+            f"  ACTION: {sd.get('action', 'minimal natural movement')}\n"
+            f"  CAMERA HINT: {sd.get('camera_hint', '')}\n"
+            f"  MOTION HINT: {sd.get('motion_hint', '')}\n"
+            f"  STYLE HINT: {sd.get('style_hint', '')}\n\n"
+        )
+
+    user_message = f"""## Grok Imagine Prompting Guide
+{grok_guide}
+
+## Scene Keyframes and Descriptions
+{scenes_text}
+
+Build {len(scene_descriptions)} Grok Imagine image-to-video prompts. \
+Write RICH, DETAILED prompts with multiple layers (primary action, secondary micro-motion, \
+camera trajectory, environmental motion, atmospheric texture, specific ambient audio). \
+Every action must be ONGOING and MID-PROGRESS — never completing or resolving within the clip. \
+No speech or dialogue. Output ONLY the JSON."""
+
+    response = oai_client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": _LIFESTYLE_REFINE_SYSTEM},
+            {"role": "user", "content": user_message},
+        ],
+        temperature=0.5,
+        response_format={"type": "json_object"},
+    )
+
+    raw = response.choices[0].message.content
+    parsed = json.loads(raw)
+    prompts = [entry["prompt"] for entry in parsed["prompts"]]
+    reasoning = parsed.get("reasoning", "")
+
+    if reasoning:
+        print(f"  GPT reasoning: {reasoning}")
+
+    return prompts
+
+
+def generate_lifestyle_video_chain(
+    storyboard: Storyboard,
+    keyframe_paths: list[str],
+    output_dir: str,
+    aspect_ratio: str = "16:9",
+    resolution: str = "720p",
+    mode: str = "normal",
+    video_model: str = "veo",
+    api_key: str | None = None,
+    disable_video_hints: bool = False,
+) -> list[str]:
+    """
+    Generate lifestyle ad videos with GPT prompt refinement.
+
+    Pipeline:
+      1. GPT 5.4 describes each keyframe image (vision)
+      2. GPT 5.4 refines scene descriptions + template hints into
+         Grok-optimized prompts using the Grok Imagine prompting guide
+      3. User confirms each scene before generation
+      4. Per-scene image-to-video generation (Grok or Veo)
+
+    Args:
+        storyboard: Storyboard with scenes.
+        keyframe_paths: List of keyframe image paths (one per scene).
+        output_dir: Directory to save scene_XX.mp4 files.
+        aspect_ratio: "16:9" or "9:16".
+        resolution: "720p", "1080p", etc.
+        mode: Grok motion intensity.
+        video_model: "grok", "veo", or "veo-standard".
+        api_key: Optional API key override.
+        disable_video_hints: Skip video template hints.
+
+    Returns:
+        List of generated video paths in scene order.
+    """
+    from openai import OpenAI
+    from openai_client import STORYBOARD_MODEL
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    scenes = sorted(storyboard.scenes, key=lambda s: s.scene_number)
+    if not scenes:
+        print("  Error: No scenes in storyboard")
+        return []
+
+    # Match scenes to keyframes
+    scenes_with_images = []
+    for scene in scenes:
+        expected_name = f"scene_{scene.scene_number:02d}.png"
+        matched_path = None
+        for kf_path in keyframe_paths:
+            if os.path.basename(kf_path) == expected_name:
+                matched_path = kf_path
+                break
+        if matched_path:
+            scenes_with_images.append((scene, matched_path))
+        else:
+            print(f"  Warning: No keyframe for scene {scene.scene_number}, skipping")
+
+    if not scenes_with_images:
+        print("  Error: No scenes matched with keyframe images")
+        return []
+
+    # Load catalogs for hint extraction
+    catalog = load_prompt_catalog()
+
+    # ── Phase 1: GPT 5.4 Prompt Refinement ──────────────────────────────
+    print(f"\n{'='*60}")
+    print("  Lifestyle Chain: Prompt Refinement")
+    print(f"{'='*60}")
+
+    oai_key = os.environ.get("OPENAI_API_KEY")
+    if not oai_key:
+        print("  Error: OPENAI_API_KEY not set — falling back to template-based prompts")
+        return generate_all_scene_videos(
+            storyboard=storyboard,
+            keyframe_paths=keyframe_paths,
+            output_dir=output_dir,
+            aspect_ratio=aspect_ratio,
+            resolution=resolution,
+            mode=mode,
+            api_key=api_key,
+            disable_video_hints=disable_video_hints,
+            video_model=video_model,
+        )
+
+    oai_client = OpenAI(api_key=oai_key)
+
+    # Step 1a: Build scene descriptions from existing storyboard data
+    # (Skip GPT vision keyframe description — the image_prompt that generated
+    # the keyframe is a better description than reverse-engineering one from
+    # the output image, and the keyframe itself is passed visually to Grok.)
+    print(f"  Building scene context from {len(scenes_with_images)} storyboard scenes...")
+    scene_descriptions = []
+    for scene, kf_path in scenes_with_images:
+        print(f"    Scene {scene.scene_number}: {os.path.basename(kf_path)}")
+        print(f"      → {scene.image_prompt[:100]}...")
+
+        # Extract template hints for this scene
+        if disable_video_hints:
+            camera_hint = ""
+            motion_hint = ""
+            style_hint = ""
+        else:
+            video_hints = _get_video_template_hints(
+                catalog,
+                scene.video_motion_type or storyboard.video_motion_type,
+                scene.video_camera_technique or storyboard.video_camera_technique,
+                scene.video_style or storyboard.video_style,
+            )
+            camera_hint = _extract_hint(video_hints, "Camera")
+            motion_hint = _extract_hint(video_hints, "Motion")
+            style_hint = _extract_hint(video_hints, "Video style")
+
+        duration = _resolve_scene_duration(scene, "lifestyle", video_model, resolution)
+
+        scene_descriptions.append({
+            "scene_number": scene.scene_number,
+            "image_description": scene.image_prompt,
+            "description": scene.description,
+            "action": scene.action or "minimal natural movement",
+            "camera_hint": camera_hint,
+            "motion_hint": motion_hint,
+            "style_hint": style_hint,
+            "duration": duration,
+        })
+
+    # Step 1b: Load Grok Imagine prompting guide
+    if os.path.exists(_GROK_PROMPTING_GUIDE_PATH):
+        with open(_GROK_PROMPTING_GUIDE_PATH) as f:
+            grok_guide = f.read()
+    else:
+        print(f"  Warning: Grok guide not found at {_GROK_PROMPTING_GUIDE_PATH}")
+        grok_guide = "(Guide not available)"
+
+    # Step 1c: Refine scene descriptions into Grok-optimized prompts
+    print(f"  Refining {len(scene_descriptions)} scenes into Grok-optimized prompts...")
+    refined_prompts = _refine_lifestyle_prompts(
+        oai_client, STORYBOARD_MODEL, grok_guide, scene_descriptions,
+    )
+
+    if len(refined_prompts) != len(scenes_with_images):
+        print(
+            f"  Warning: GPT returned {len(refined_prompts)} prompts for "
+            f"{len(scenes_with_images)} scenes. Padding/truncating."
+        )
+        while len(refined_prompts) < len(scenes_with_images):
+            scene, _ = scenes_with_images[len(refined_prompts)]
+            refined_prompts.append(
+                f"Subtle organic movement, camera slowly pulls back. "
+                f"Natural ambient sound. {scene.description}"
+            )
+        refined_prompts = refined_prompts[:len(scenes_with_images)]
+
+    for i, prompt in enumerate(refined_prompts):
+        scene, _ = scenes_with_images[i]
+        print(f"\n  [Scene {scene.scene_number}] ({scene_descriptions[i]['duration']}s)")
+        print(f"    Grok prompt: {prompt[:200]}...")
+
+    # Save refinement artifacts
+    artifacts = {
+        "guide_used": "Grok_imagine_prompting_guide.md",
+        "video_model": video_model,
+        "scenes": [
+            {
+                "scene_number": sd["scene_number"],
+                "duration": sd["duration"],
+                "keyframe_image_prompt": sd["image_description"],
+                "scene_description": sd["description"],
+                "refined_prompt": refined_prompts[i],
+            }
+            for i, sd in enumerate(scene_descriptions)
+        ],
+    }
+    artifacts_path = os.path.join(output_dir, "lifestyle_prompt_refinement.json")
+    with open(artifacts_path, "w") as f:
+        json.dump(artifacts, f, indent=2)
+    print(f"\n  Saved prompt refinement: {artifacts_path}")
+
+    # ── Phase 2: Per-Scene Video Generation ─────────────────────────────
+    model_label = {
+        "grok": "Grok Imagine Video",
+        "veo": "Veo 3.1 Fast",
+        "veo-standard": "Veo 3.1 Standard",
+    }.get(video_model, video_model)
+
+    print(f"\n{'='*60}")
+    print(f"  Lifestyle Chain: {model_label} Video Generation")
+    print(f"    Scenes: {len(scenes_with_images)} | Resolution: {resolution} | Aspect: {aspect_ratio}")
+    print(f"{'='*60}")
+
+    video_paths = []
+    for i, (scene, kf_path) in enumerate(scenes_with_images):
+        prompt = refined_prompts[i]
+        dur = scene_descriptions[i]["duration"]
+        output_path = os.path.join(output_dir, f"scene_{scene.scene_number:02d}.mp4")
+
+        # Log the refined prompt back to the storyboard scene
+        scene.grok_video_prompt = prompt
+
+        # ── Confirmation prompt ──
+        print(f"\n  ┌─ Scene {scene.scene_number} ({dur}s) ──────────")
+        for line in prompt.split(". "):
+            stripped = line.strip().rstrip(".")
+            if stripped:
+                print(f"  │ {stripped}.")
+        print(f"  └──────────────────────────────────────")
+        while True:
+            confirm = input(f"  Proceed with Scene {scene.scene_number}? [Y/n/skip] ").strip().lower()
+            if confirm in ("", "y", "yes"):
+                break
+            elif confirm in ("n", "no"):
+                print("  Aborting lifestyle chain generation.")
+                return video_paths
+            elif confirm == "skip":
+                print(f"  Skipping scene {scene.scene_number}.")
+                break
+            else:
+                print("  Enter Y to proceed, N to abort, or 'skip' to skip this scene.")
+
+        if confirm == "skip":
+            continue
+
+        print(f"\n  [Scene {scene.scene_number}] Image-to-Video ({dur}s) via {model_label}")
+        print(f"    Keyframe: {kf_path}")
+
+        result = generate_video(
+            video_model=video_model,
+            prompt=prompt,
+            image_paths=[kf_path],
+            duration=dur,
+            aspect_ratio=aspect_ratio,
+            resolution=resolution,
+            mode=mode,
+            output_path=output_path,
+        )
+
+        result["grok_video_prompt"] = prompt
+
+        if result.get("status") == "success":
+            video_paths.append(result["video_path"])
+            gen_time = result.get("generation_time_ms", 0)
+            print(f"    Saved: {result['video_path']} ({gen_time / 1000:.0f}s)")
+        else:
+            print(f"    FAILED: {result.get('error', 'Unknown error')}")
+
+    print(f"\n  Generated {len(video_paths)}/{len(scenes_with_images)} lifestyle videos")
+    return video_paths
+
+
 # ── New UGC: Extension-Chained Video Generation ────────────────────────
 #
 # Follows the prompting philosophy from the Veo prompting guide:
@@ -766,52 +1214,88 @@ You will receive:
 2. A description of the reference image (the starting frame)
 3. N narration segments — one per scene, each with its own duration. \
 Scene 1 is image-to-video, scenes 2+ are extensions.
+4. Product and storyboard context (brand, outfit, setting, etc.)
 
-Your job is to build N production-ready Veo 3.1 prompts — one per scene — \
+Your job is to build N structured scene descriptors — one per scene — \
 that together produce a seamless, continuous UGC video of a person speaking to \
 camera about a product, as if recorded by an influencer.
 
 DIALOGUE — THE MOST IMPORTANT RULE:
-- Each scene has a narration_segment provided. You MUST use that narration \
-VERBATIM as the spoken dialogue in the prompt. Do NOT paraphrase, reword, \
-shorten, or rephrase it. Copy it EXACTLY as given.
-- Place the exact narration text inside quotes in a Dialogue line.
+- Each scene has a narration_segment provided. This is what the creator \
+actually SAYS OUT LOUD. Use it VERBATIM as the spoken dialogue. \
+Do NOT paraphrase, reword, shorten, or rephrase it. Copy it EXACTLY as given.
+- If the narration contains parenthetical cues like "(smiling wide)" or \
+"(touching fabric)", those are NOT spoken words. Strip them from the dialogue \
+and fold them into the scene description instead.
 - If the narration is too long for the scene duration, you may TRIM from the \
 end (cut trailing words) but NEVER rewrite or substitute words.
 - Dialogue that gets cut off mid-sentence causes audio hallucination artifacts. \
 If you must trim, cut to the last complete sentence or clause.
 
-PROMPT STRUCTURE:
-- For each scene, build a Veo prompt with these elements:
-  Subject, Action, Style, Camera, Composition, Focus, Ambiance, Dialogue.
-- Use parenthetical action cues before dialogue for delivery style \
-(e.g., "(smiling, looking down at the fabric)").
+SCENE DESCRIPTION RULES:
+- The "scene" field must describe what the person is DOING — their physical \
+actions, facial expressions, body language, and interaction with the product. \
+It should read like a short film direction.
+- NEVER specify left or right hand. The keyframe determines which hand is \
+raised or extended — use "her raised hand", "her extended arm", etc.
+- For scenes 2+, the scene description MUST start with "Extend this video with" \
+as required by Veo's extension API.
 
-OTHER CRITICAL RULES:
-- SUBJECT CONTINUITY: ALL scenes must describe the SAME person with the SAME \
-appearance, clothing, and setting as the reference image. Never change who they \
-are or what they wear between scenes.
-- REALISTIC MOTION: Describe natural body language — subtle hand gestures, \
-slight head tilts, natural eye contact with camera. Avoid dramatic or \
-exaggerated movements. The person should move like a real human filming a \
-selfie/tripod video.
-- SEAMLESS TRANSITIONS: Each scene must pick up exactly where the previous one \
-ends. The last action/pose of scene N should flow into the first action of scene N+1.
-- AUDIO CONTINUITY: Include ambient sound cues (soft room tone, etc.) that \
-stay consistent across all scenes. No music unless the user asked for it.
-- EXTENSION FORMAT: Scenes 2+ MUST be prefixed with "Extend this video with" \
-as shown in the Veo prompting guide's extension section.
-- The stitched video must feel like ONE unbroken take of a person telling a story.
+REALISM RULES:
+- NATURAL MICRO-EXPRESSIONS: Include subtle head nods and gentle eye rolls \
+like how people react when talking about something from the top of their head.
+- NO STUTTERING: The narration script must be spoken faithfully and clearly \
+throughout the entire video duration. No stuttering, repeated words, or stumbles.
+- BODY LANGUAGE DEPTH: Describe fidgeting, holding both hands together, \
+shifting weight back and forth, adjusting posture, briefly touching hair or face. \
+These small restless movements make the person feel genuinely human and unscripted.
+- SEAMLESS TRANSITIONS: Each scene picks up exactly where the previous one ends.
+
+CAMERA RULES:
+- shot: Describe the framing (e.g. "medium close-up", "waist-up", "close-up on hands and product")
+- movement: Describe subtle camera motion (e.g. "slight push in", "static with minor handheld drift", "gentle pull back")
+
+AUDIO RULES:
+- voice: Describe the vocal delivery (tone, energy, pace) — NOT the words themselves
+- soundtrack: Ambient audio. Keep consistent across all scenes. No music unless requested.
 
 Output ONLY valid JSON with this exact structure:
 {
-  "prompts": [
-    {"scene": 1, "prompt": "..."},
-    {"scene": 2, "prompt": "Extend this video with ..."},
-    ...
+  "scenes": [
+    {
+      "sceneNumber": 1,
+      "scene": "A young woman holds a product up to camera and smiles naturally.",
+      "dialogue": ["First line of dialogue.", "Second line if any."],
+      "durationSeconds": 6,
+      "style": "UGC-style, casual, authentic influencer vibe",
+      "camera": {
+        "shot": "medium close-up",
+        "movement": "slight push in"
+      },
+      "lighting": "soft natural window light with warm tone",
+      "environment": "same as reference image",
+      "audio": {
+        "voice": "clear, friendly female voice, conversational tone",
+        "soundtrack": "very subtle ambient room tone"
+      }
+    },
+    {
+      "sceneNumber": 2,
+      "scene": "Extend this video with the woman looking down at the product...",
+      "dialogue": ["Next line of dialogue."],
+      ...
+    }
   ],
+  "product": {
+    "brand": "Brand name if known",
+    "name": "Product name or description"
+  },
   "reasoning": "Brief explanation of refinement choices"
-}"""
+}
+
+IMPORTANT: The "scene" field (description) is the CORE of the Veo prompt. \
+Make it vivid and specific. The dialogue, camera, lighting, and audio fields \
+add structure but the scene description carries the visual direction."""
 
 
 def _load_image_base64(path: str) -> tuple[str, str]:
@@ -851,6 +1335,75 @@ def _describe_keyframe(oai_client, image_path: str, model: str) -> str:
     return response.choices[0].message.content
 
 
+def _strip_parentheticals(text: str) -> tuple[str, list[str]]:
+    """Strip parenthetical cues from narration, return (clean_dialogue, [cues])."""
+    import re
+    cues = re.findall(r'\(([^)]+)\)', text)
+    clean = re.sub(r'\s*\([^)]*\)\s*', ' ', text).strip()
+    # Collapse double spaces left by removal
+    clean = re.sub(r'\s{2,}', ' ', clean).strip()
+    return clean, cues
+
+
+def _compose_veo_prompt(scene_data: dict) -> str:
+    """Flatten a structured scene descriptor into a Veo-compatible text prompt.
+
+    Takes the structured JSON fields (scene, dialogue, camera, lighting, etc.)
+    and composes them into a single coherent text prompt that Veo understands.
+    """
+    parts = []
+
+    # Scene description is the core visual direction
+    scene_desc = scene_data.get("scene", "")
+    if scene_desc:
+        parts.append(scene_desc)
+
+    # Dialogue in quotes — Veo uses quoted text for speech
+    dialogue = scene_data.get("dialogue", [])
+    if dialogue:
+        quoted = " ".join(f'"{line}"' for line in dialogue)
+        parts.append(f"She speaks naturally: {quoted}")
+
+    # Style
+    style = scene_data.get("style", "")
+    if style:
+        parts.append(style)
+
+    # Camera
+    camera = scene_data.get("camera", {})
+    if camera:
+        cam_parts = []
+        if camera.get("shot"):
+            cam_parts.append(camera["shot"])
+        if camera.get("movement"):
+            cam_parts.append(camera["movement"])
+        if cam_parts:
+            parts.append(f"Camera: {', '.join(cam_parts)}.")
+
+    # Lighting
+    lighting = scene_data.get("lighting", "")
+    if lighting:
+        parts.append(f"Lighting: {lighting}.")
+
+    # Environment
+    environment = scene_data.get("environment", "")
+    if environment:
+        parts.append(f"Setting: {environment}.")
+
+    # Audio
+    audio = scene_data.get("audio", {})
+    if audio:
+        audio_parts = []
+        if audio.get("voice"):
+            audio_parts.append(audio["voice"])
+        if audio.get("soundtrack"):
+            audio_parts.append(audio["soundtrack"])
+        if audio_parts:
+            parts.append(f"Audio: {'; '.join(audio_parts)}.")
+
+    return " ".join(parts)
+
+
 def _refine_ugc_prompts(
     oai_client,
     model: str,
@@ -858,19 +1411,38 @@ def _refine_ugc_prompts(
     image_description: str,
     scenes: list[StoryboardScene],
     scene_durations: list[int],
+    storyboard: Storyboard = None,
 ) -> list[str]:
-    """Use GPT to refine narration segments into Veo-optimized extension prompts."""
+    """Use GPT to refine narration segments into structured Veo prompts.
+
+    Returns a list of composed text prompts ready for Veo, plus saves the
+    structured JSON for debugging/iteration.
+    """
     segments_text = ""
     for i, scene in enumerate(scenes):
         dur = scene_durations[i] if i < len(scene_durations) else scene_durations[-1]
         label = "image-to-video" if scene.scene_number == 1 else "video extension"
         narration = scene.narration_segment or scene.description
+        clean_dialogue, cues = _strip_parentheticals(narration)
+        cue_text = f"  DELIVERY CUES (describe as actions, do NOT speak): {', '.join(cues)}\n" if cues else ""
         segments_text += (
             f"Scene {scene.scene_number} ({label}, {dur} seconds):\n"
-            f"  EXACT DIALOGUE: \"{narration}\"\n"
+            f"  EXACT DIALOGUE: \"{clean_dialogue}\"\n"
+            f"{cue_text}"
         )
 
     duration_note = ", ".join(f"Scene {i+1}: {d}s" for i, d in enumerate(scene_durations))
+
+    # Build product/storyboard context
+    context_lines = []
+    if storyboard:
+        if storyboard.subject_identity:
+            context_lines.append(f"Subject: {storyboard.subject_identity}")
+        if storyboard.subject_outfit:
+            context_lines.append(f"Outfit/Product: {storyboard.subject_outfit}")
+        if storyboard.music_direction:
+            context_lines.append(f"Music direction: {storyboard.music_direction}")
+    context_text = "\n".join(context_lines) if context_lines else "(not provided)"
 
     user_message = f"""## Veo Prompting Guide
 {veo_guide}
@@ -878,16 +1450,22 @@ def _refine_ugc_prompts(
 ## Reference Image Description (Generated by Nano Banana)
 {image_description}
 
+## Product & Storyboard Context
+{context_text}
+
 ## Narration Segments (USE VERBATIM — do NOT paraphrase or reword)
 {segments_text}
 
 ## Video Durations
 {duration_note}
-The EXACT DIALOGUE text above must appear word-for-word in quotes in each prompt. \
+The EXACT DIALOGUE text above must appear word-for-word in the dialogue array. \
 If a line is too long for the duration, trim from the end at a sentence boundary, \
 but NEVER substitute different words.
 
-Build {len(scenes)} Veo 3.1 prompts. Output ONLY the JSON."""
+## Aspect Ratio
+{storyboard.aspect_ratio if storyboard else '9:16'}
+
+Build {len(scenes)} structured scene descriptors. Output ONLY the JSON."""
 
     response = oai_client.chat.completions.create(
         model=model,
@@ -901,11 +1479,20 @@ Build {len(scenes)} Veo 3.1 prompts. Output ONLY the JSON."""
 
     raw = response.choices[0].message.content
     parsed = json.loads(raw)
-    prompts = [entry["prompt"] for entry in parsed["prompts"]]
-    reasoning = parsed.get("reasoning", "")
 
+    reasoning = parsed.get("reasoning", "")
     if reasoning:
         print(f"  GPT reasoning: {reasoning}")
+
+    # Extract structured scenes and compose into Veo text prompts
+    structured_scenes = parsed.get("scenes", [])
+    prompts = []
+    for scene_data in structured_scenes:
+        prompt = _compose_veo_prompt(scene_data)
+        prompts.append(prompt)
+
+    # Store the full structured JSON for artifacts/debugging
+    _refine_ugc_prompts._last_structured = parsed
 
     return prompts
 
@@ -993,11 +1580,12 @@ def generate_ugc_video_chain(
         print(f"  Warning: Veo prompting guide not found at {_VEO_PROMPTING_GUIDE_PATH}")
         veo_guide = "(Guide not available)"
 
-    # Step 1c: Refine narration into Veo prompts
-    print(f"  Refining {len(scenes)} narration segments into Veo prompts...")
+    # Step 1c: Refine narration into structured Veo prompts
+    print(f"  Refining {len(scenes)} narration segments into structured Veo prompts...")
     refined_prompts = _refine_ugc_prompts(
         oai_client, STORYBOARD_MODEL, veo_guide,
         image_description, scenes, durations,
+        storyboard=storyboard,
     )
 
     if len(refined_prompts) != len(scenes):
@@ -1016,16 +1604,18 @@ def generate_ugc_video_chain(
         print(f"    Narration: {scene.narration_segment or scene.description}")
         print(f"    Veo prompt: {prompt[:200]}...")
 
-    # Save refinement artifacts
+    # Save refinement artifacts (including full structured JSON from GPT)
+    structured_data = getattr(_refine_ugc_prompts, "_last_structured", {})
     artifacts = {
         "image_description": image_description,
         "scene_durations": durations,
-        "scenes": [
+        "structured_prompts": structured_data,
+        "composed_prompts": [
             {
                 "scene_number": s.scene_number,
                 "duration": durations[i],
                 "narration": s.narration_segment or s.description,
-                "refined_prompt": refined_prompts[i],
+                "veo_prompt": refined_prompts[i],
             }
             for i, s in enumerate(scenes)
         ],

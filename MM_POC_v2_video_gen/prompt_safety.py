@@ -10,28 +10,6 @@ _ASPECT_RATIO_PHRASE_RE = re.compile(
 )
 
 _VEO_ASPECT_RATIOS = {"16:9", "9:16"}
-_DROP_LINE_PATTERNS = (
-    re.compile(r"(?i)\btext overlay\b"),
-    re.compile(r"(?i)\btitle card\b"),
-    re.compile(r"(?i)\bcaption overlay\b"),
-    re.compile(r"(?i)\bnegative space for text\b"),
-    re.compile(r"(?i)\bspace for caption\b"),
-    re.compile(r"(?i)\bspace for text overlay\b"),
-    re.compile(r"(?i)\bsplit[- ]screen\b"),
-    re.compile(r"(?i)\bbefore[-/]after\b"),
-    re.compile(r"(?i)\bmulti-panel\b"),
-    re.compile(r"(?i)\bcollage\b"),
-    re.compile(r"(?i)\bgrid layout\b"),
-)
-_INLINE_STRIP_PATTERNS = (
-    re.compile(r"(?i),?\s*hold\s+\d+(?:\.\d+)?s\s+before\s+cut"),
-    re.compile(r"(?i),?\s*quick\s+cuts?"),
-    re.compile(r"(?i),?\s*jump\s+cuts?"),
-    re.compile(r"(?i),?\s*match\s+cuts?"),
-    re.compile(r"(?i),?\s*smash\s+cuts?"),
-    re.compile(r"(?i),?\s*cut\s+to\s+[^,.;\n]+"),
-    re.compile(r"(?i),?\s*before\s+cut"),
-)
 
 
 def normalize_aspect_ratio(aspect_ratio: str) -> str:
@@ -50,27 +28,9 @@ def validate_video_aspect_ratio(video_model: str, aspect_ratio: str) -> str:
 
 
 def sanitize_visual_constraints(text: str) -> str:
-    if not text:
-        return text
-
-    cleaned_lines = []
-    for raw_line in text.splitlines():
-        line = raw_line.strip()
-        if not line:
-            if cleaned_lines and cleaned_lines[-1] != "":
-                cleaned_lines.append("")
-            continue
-        if any(pattern.search(line) for pattern in _DROP_LINE_PATTERNS):
-            continue
-        for pattern in _INLINE_STRIP_PATTERNS:
-            line = pattern.sub("", line)
-        line = re.sub(r"\s{2,}", " ", line).strip(" ,.;")
-        if line:
-            cleaned_lines.append(line)
-
-    sanitized = "\n".join(cleaned_lines)
-    sanitized = re.sub(r"\n{3,}", "\n\n", sanitized)
-    return sanitized.strip()
+    """No-op — kept for API compatibility. Line-dropping was removed because it
+    silently stripped scene descriptions and subject locks from prompts."""
+    return (text or "").strip()
 
 
 def sanitize_generation_prompt(text: str, aspect_ratio: str) -> str:

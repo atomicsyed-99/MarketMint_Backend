@@ -20,7 +20,7 @@ def create_openai_client() -> OpenAI:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY not set in environment")
-    return OpenAI(api_key=api_key)
+    return OpenAI(api_key=api_key, timeout=120.0)
 
 
 def _pil_to_openai_image(img: PILImage.Image) -> dict:

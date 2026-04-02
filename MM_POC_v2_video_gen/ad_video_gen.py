@@ -44,7 +44,7 @@ from prompt_safety import (
     validate_video_aspect_ratio,
 )
 from storyboard_planner import StoryboardPlanner, AdDirector
-from scene_video_generator import generate_all_scene_videos, generate_ugc_video_chain
+from scene_video_generator import generate_all_scene_videos, generate_ugc_video_chain, generate_lifestyle_video_chain
 from video_stitcher import assemble_final
 from cost_tracker import estimate_run_cost, print_cost_summary, save_cost_json
 
@@ -145,10 +145,7 @@ def _print_template_banner(planner, storyboard):
 
     # Script skills
     print(f"\n  --- Script Skills ---")
-    print(f"  Framework: {storyboard.script_framework}")
     print(f"  Format:    {storyboard.commercial_format}")
-    print(f"  Trigger:   {storyboard.emotional_trigger}")
-    print(f"  Domain:    {storyboard.domain}")
 
     # Per-scene video hints (when director is active)
     has_per_scene = any(s.video_motion_type for s in storyboard.scenes)
@@ -234,12 +231,25 @@ def _generate_keyframe(
     asset_preservation = ""
     if uploaded_images:
         asset_preservation = (
-            "ASSET PRESERVATION: Treat the attached subject/product reference image as authoritative. "
-            "Retain the exact asset shape, color, proportions, materials, construction details, pattern placement, "
-            "and branding visible in the reference. Do not redesign, simplify, embellish, or substitute the asset. "
+            "ASSET PRESERVATION: Treat the attached subject/product reference image as authoritative "
+            "for the PRODUCT/ASSET ONLY — retain the exact asset shape, color, proportions, materials, "
+            "construction details, pattern placement, and branding visible in the reference. "
+            "Do not redesign, simplify, embellish, or substitute the asset. "
+            "BACKGROUND RULE: IGNORE the background of the reference image entirely. "
+            "The reference image may have been shot in a store, studio, or random location — "
+            "do NOT reproduce that background. Instead, use the scene description and setting "
+            "specified in the prompt below to determine the environment and background. "
+        )
+    character_override = ""
+    if character_image is not None:
+        character_override = (
+            "CHARACTER REFERENCE OVERRIDE: A character/model reference photo is attached. "
+            "The person's face, skin tone, and physical features in that photo are AUTHORITATIVE. "
+            "If any [SUBJECT LOCK] text below describes facial features, skin tone, or body type "
+            "that conflicts with the attached character photo, IGNORE the text and follow the photo. "
         )
     scene_prompt = sanitize_generation_prompt(
-        anti_collage + asset_preservation + scene_prompt,
+        anti_collage + asset_preservation + character_override + scene_prompt,
         aspect_ratio,
     )
 
@@ -411,6 +421,18 @@ def _resume_videos_from_run(args) -> None:
             output_dir=scene_video_dir,
             aspect_ratio=args.aspect_ratio,
             resolution=args.resolution,
+        )
+    elif storyboard.commercial_format == "lifestyle":
+        print(f"\n[Step 4/6] Generating lifestyle videos with GPT refinement + {video_model_label}...")
+        scene_video_paths = generate_lifestyle_video_chain(
+            storyboard=storyboard,
+            keyframe_paths=keyframe_paths,
+            output_dir=scene_video_dir,
+            aspect_ratio=args.aspect_ratio,
+            resolution=args.resolution,
+            mode=args.mode,
+            video_model=args.video_model,
+            disable_video_hints=args.no_grok_skills,
         )
     else:
         print(f"\n[Step 4/6] Generating per-scene videos with {video_model_label}...")
@@ -770,10 +792,7 @@ def main():
             video_motion_type="cinematic",
             video_camera_technique="dolly_in",
             video_style="cinematic_video",
-            script_framework="none",
             commercial_format="lifestyle",
-            emotional_trigger="aspiration",
-            domain="general",
         )
     else:
         storyboard = planner.plan(
@@ -912,8 +931,24 @@ def main():
             aspect_ratio=args.aspect_ratio,
             resolution=args.resolution,
         )
+    elif storyboard.commercial_format == "lifestyle":
+        # Lifestyle: GPT-refined per-scene video generation with Grok Imagine guide
+        _print_storyboard(storyboard)
+        print(f"\n[Step 4/6] Generating lifestyle videos with GPT refinement + {video_model_label}...")
+        print(f"  Keyframes: {len(keyframe_paths)} | Scenes: {len(storyboard.scenes)}")
+
+        scene_video_paths = generate_lifestyle_video_chain(
+            storyboard=storyboard,
+            keyframe_paths=keyframe_paths,
+            output_dir=scene_video_dir,
+            aspect_ratio=args.aspect_ratio,
+            resolution=args.resolution,
+            mode=args.mode,
+            video_model=args.video_model,
+            disable_video_hints=args.no_grok_skills,
+        )
     else:
-        # Lifestyle / UGC Legacy: per-scene independent video generation
+        # UGC Legacy or unknown: per-scene independent video generation (template-based)
         print(f"\n[Step 4/6] Generating per-scene videos with {video_model_label}...")
         print(f"  Keyframes: {len(keyframe_paths)} | Scenes: {len(storyboard.scenes)}")
 
@@ -976,9 +1011,7 @@ def main():
     print(f"  Use case:    {storyboard.use_case}")
     print(f"  Style:       {storyboard.style}")
     print(f"  Subject:     {storyboard.subject}")
-    print(f"  Framework:   {storyboard.script_framework}")
     print(f"  Format:      {storyboard.commercial_format}")
-    print(f"  Domain:      {storyboard.domain}")
     print("=" * 62)
 
     # ---------------------------------------------------------------

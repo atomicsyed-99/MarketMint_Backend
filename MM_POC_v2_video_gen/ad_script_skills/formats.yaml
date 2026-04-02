@@ -61,7 +61,6 @@ fragments:
     scene_types:
       - slug: ambient_establishing
         role: opener
-        primary_category: locomotion
         visual: "Quick opening lifestyle beat, readable environment, product may be subtle or partially visible, no staged stop-the-scroll hook"
         allowed_actions: [walk_forward, walk_and_pause, look_up_smile]
         video_hints:
@@ -70,52 +69,30 @@ fragments:
           style: editorial_video
       - slug: everyday_use_moment
         role: build
-        primary_category: garment_interaction
         visual: "Short everyday action relevant to the use case, such as adjusting an outfit, sipping coffee, checking a phone, or interacting naturally with the product"
-        allowed_actions: [sip_drink, check_phone, drive_car, wear_and_adjust]
-        domain_overrides:
-          fashion: [wear_and_adjust, hair_touch, relaxed_lean]
-          beauty: [hair_touch, look_up_smile, relaxed_lean]
-          food: [sip_drink, seated_casual, relaxed_lean]
-          tech: [check_phone, seated_casual, relaxed_lean]
-          fitness: [confident_stand, relaxed_lean, walk_and_pause]
+        allowed_actions: [sip_drink, check_phone, drive_car, wear_and_adjust, hair_touch, relaxed_lean, seated_casual, confident_stand]
         video_hints:
           motion: natural_human
           camera: handheld
           style: raw_video
       - slug: product_in_context
         role: build
-        primary_category: product_focus
         visual: "Product appears naturally in use, medium or close-up shot, real-world context, specific detail now readable"
-        allowed_actions: [fabric_touch, product_inspect, wear_and_adjust]
-        domain_overrides:
-          fashion: [fabric_touch, product_inspect, wear_and_adjust]
-          beauty: [product_inspect, hair_touch, look_up_smile]
-          food: [sip_drink, product_inspect, seated_casual]
-          tech: [product_inspect, check_phone, seated_casual]
-          fitness: [product_inspect, confident_stand, walk_forward]
+        allowed_actions: [fabric_touch, product_inspect, wear_and_adjust, hair_touch, look_up_smile, sip_drink, check_phone, confident_stand, walk_forward]
         video_hints:
           motion: reveal
           camera: dolly_in
           style: editorial_video
       - slug: lifestyle_moment
         role: build
-        primary_category: body_movement
         visual: "Show the product in motion within real life, with one clear dynamic action and believable body mechanics — this scene should feel kinetically different from all others"
-        allowed_actions: [gentle_twirl, over_shoulder_turn, walk_and_pause, hair_touch]
-        domain_overrides:
-          fashion: [gentle_twirl, over_shoulder_turn, walk_and_pause]
-          beauty: [over_shoulder_turn, gentle_twirl, hair_touch]
-          food: [sip_drink, walk_and_pause, relaxed_lean]
-          tech: [walk_and_pause, check_phone, relaxed_lean]
-          fitness: [walk_and_pause, confident_stand, relaxed_lean]
+        allowed_actions: [gentle_twirl, over_shoulder_turn, walk_and_pause, hair_touch, sip_drink, check_phone, confident_stand, relaxed_lean]
         video_hints:
           motion: cinematic
           camera: tracking
           style: editorial_video
       - slug: brand_cta
         role: cta
-        primary_category: static_pose
         visual: "Soft closing beat, product clearly visible, natural pause at the end, no aggressive CTA"
         allowed_actions: [confident_stand, look_up_smile, nod_and_point, relaxed_lean]
         video_hints:
@@ -136,11 +113,25 @@ fragments:
       3. Scene 1: image-to-video with the keyframe + first narration segment
       4. Scenes 2+: each extends the previous video with the next narration segment
 
+      Opener rules:
+      - Scene 1 should feel like the creator just hit record. The opener MAY begin with a casual greeting ("Hey guys", "Okay so") OR jump straight into the topic ("So I've been using this for a week...", "This fabric though..."). Vary the approach — not every UGC ad needs a salutation. Pick whichever feels most natural for the tone and energy of this specific ad.
+      - The opener sets the tone — it should feel spontaneous and unscripted.
+
       Narration rules:
       - Each segment must be SHORT ENOUGH to finish naturally within the clip duration (1-2 short sentences for 8s)
       - Dialogue that gets cut off mid-sentence causes audio hallucination artifacts
       - The creator speaks in a casual, enthusiastic influencer tone
       - Use parenthetical action cues for delivery: "(smiling, holding product up)"
+
+      Expression and delivery:
+      - The creator should be EXPRESSIVE — smiling, eyebrows raised, genuine reactions, not a flat monotone delivery.
+      - Natural micro-gestures: slight hand movements, head tilts, looking down at the product then back at camera.
+      - The energy should feel like they're genuinely excited to share, not reading off a teleprompter.
+
+      Action rules:
+      - Keep actions MINIMAL and natural. The creator is talking to camera — they are not performing choreography.
+      - Small gestures only: adjusting the product, touching fabric, pointing casually. No dramatic twirls or walks.
+      - The focus is on what the creator is SAYING, not what they are doing.
 
       Visual direction: Phone-camera POV, eye-level, natural/indoor lighting, casual setting. Realistic body language — subtle hand gestures, slight head tilts, natural eye contact. The creator moves like a real person filming a selfie/tripod video. Consistent ambient audio across all scenes, no music unless requested. Each extension picks up exactly where the previous scene left off.
       </commercial_format>

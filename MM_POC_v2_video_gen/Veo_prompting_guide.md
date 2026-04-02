@@ -2,50 +2,67 @@
 
 This section contains examples of videos you can create using Veo, and shows you how to modify prompts to produce distinct results.
 
-## Prompt writing basics
+# Prompt writing basics
 
 Good prompts are descriptive and clear. To get the most out of Veo, start with identifying your core idea, refine your idea by adding keywords and modifiers, and incorporate video-specific terminology into your prompts.
 
 The following elements should be included in your prompt:
 
-1. Subject: The object, person, animal, or scenery that you want in your video, such as cityscape, nature, vehicles, or puppies.
-2.  Action: What the subject is doing (for example, walking, running, or turning their head).
-3. Style: Specify creative direction using specific film style keywords, such as sci-fi, horror film, film noir, or animated styles like cartoon.
-4. Camera positioning and motion: [Optional] Control the camera's location and movement using terms like aerial view, eye-level, top-down shot, dolly shot, or worms eye.
-5. Composition: [Optional] How the shot is framed, such as wide shot, close-up, single-shot or two-shot.
-6. Focus and lens effects: [Optional] Use terms like shallow focus, deep focus, soft focus, macro lens, and wide-angle lens to achieve specific visual effects.
-7. Ambiance: [Optional] How the color and light contribute to the scene, such as blue tones, night, or warm tones.
+    1. Subject: The object, person, animal, or scenery that you want in your video, such as cityscape, nature, vehicles, or puppies.
 
-More tips for writing prompts
+    2. Action: What the subject is doing (for example, walking, running, or turning their head).
 
-    Use descriptive language: Use adjectives and adverbs to paint a clear picture for Veo.
-    Enhance the facial details: Specify facial details as a focus of the photo like using the word portrait in the prompt.
+    3. Style: Specify creative direction using specific film style keywords, such as sci-fi, horror film, film noir, or animated styles like cartoon.
+
+    4. Camera positioning and motion: [Optional] Control the camera's location and movement using terms like aerial view, eye-level, top-down shot, dolly shot, or worms eye.
+
+    5. Composition: [Optional] How the shot is framed, such as wide shot, close-up, single-shot or two-shot.
+
+    6. Focus and lens effects: [Optional] Use terms like shallow focus, deep focus, soft focus, macro lens, and wide-angle lens to achieve specific visual effects.
+
+    7. Ambiance: [Optional] How the color and light contribute to the scene, such as blue tones, night, or warm tones.
+
+# More tips for writing prompts
+
+Use descriptive language: Use adjectives and adverbs to paint a clear picture for Veo.
+Enhance the facial details: Specify facial details as a focus of the photo like using the word portrait in the prompt.
 
 # Prompting for audio
 
-With Veo 3, you can provide cues for sound effects, ambient noise, and dialogue. The model captures the nuance of these cues to generate a synchronized soundtrack.
+With Veo 3.1, you can provide cues for sound effects, ambient noise, and dialogue. To achieve the best synchronization and voice quality, follow these advanced syntax rules:
 
-    Dialogue: Use quotes for specific speech. (Example: "This must be the key," he murmured.)
-    Sound Effects (SFX): Explicitly describe sounds. (Example: tires screeching loudly, engine roaring.)
-    Ambient Noise: Describe the environment's soundscape. (Example: A faint, eerie hum resonates in the background.)
+    1. Dialogue & Lip-Sync: Use double quotation marks (" ") for all speech. To trigger perfect lip-syncing, always specify the speaker and their tone immediately before the quote.
 
-# Examples : 
+      * Rule: Keep lines short (4–10 words) to prevent the audio from drifting out of sync.
 
-1. More detail (Dialogue and ambience)
-A wide shot of a misty Pacific Northwest forest. Two exhausted hikers, a man and a woman, push through ferns when the man stops abruptly, staring at a tree. Close-up: Fresh, deep claw marks are gouged into the tree's bark. Man: (Hand on his hunting knife) "That's no ordinary bear." Woman: (Voice tight with fear, scanning the woods) "Then what is it?" A rough bark, snapping twigs, footsteps on the damp earth. A lone bird chirps.
+      * Pro Tip: Use "Medium Close-up" or "Head-and-Shoulders" framing; the model syncs better when the mouth is large and clear in the frame.
 
-## Prompting with reference images : 
+    2. Voice Consistency in Extensions: When extending a video, repeat the exact character description and voice descriptors (e.g., "in a gravelly, low whisper") from the previous clip. This ensures the model maintains the same vocal profile.
+
+    3. Sound Effects (SFX): Use the "SFX:" prefix and anchor the sound to a visual action for better timing.
+
+        Example: "SFX: A heavy metallic thud as the lid slams shut."
+
+    4. Ambient Noise: Establish the "sonic bed" separately to avoid masking the dialogue.
+
+        Example: "Ambient: The distant, rhythmic hum of a spaceship engine."
+
+## Examples:
+
+    Precision Dialogue and Sync (Hiker Scenario)
+    A medium close-up of two exhausted hikers, a man with a scruffy beard and a woman in a green parka. They are standing in a misty Pacific Northwest forest. The man stops abruptly, staring at a tree. He says in a low, urgent whisper, "That's no ordinary bear." The woman scans the woods, her eyes wide, and replies in a strained, trembling voice, "Then what is it?" Audio: A heavy branch snaps nearby. Ambient: Gentle wind through ferns and a distant crow call.
+
+# Prompting with reference images:
 
 Input image (Generated by Nano Banana)
 A hyperrealistic macro photo of tiny, miniature surfers riding ocean waves inside a rustic stone bathroom sink. A vintage brass faucet is running, creating the perpetual surf. Surreal, whimsical, bright natural lighting.
 
 Output Video (Generated by Veo 3.1)
 A surreal, cinematic macro video. Tiny surfers ride perpetual, rolling waves inside a stone bathroom sink. A running vintage brass faucet generates the endless surf. The camera slowly pans across the whimsical, sunlit scene as the miniature figures expertly carve the turquoise water.
-
-## Prompting for extension : 
+Prompting for extension:
 
 Input video (Generated by Veo 3.1)
-The paraglider takes off from the top of the mountain and starts gliding down the mountains overlooking the flower covered valleys below.
+The paraglider takes off from the top of the mountain and starts gliding down the mountains overlooking the flower covered valleys below. He shouts excitedly into his radio, "I've never seen anything like this!"
 
 Output Video (Generated by Veo 3.1)
-Extend this video with the paraglider slowly descending.
+Extend this video with the paraglider slowly descending. The same paraglider continues speaking into his radio in the same excited, high-pitched voice, "The valley is completely covered in purple blooms!" The camera follows his descent from a trailing aerial view. SFX: The consistent whistling of wind rushing past the parachute.

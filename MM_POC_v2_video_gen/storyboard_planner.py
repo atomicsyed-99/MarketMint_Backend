@@ -118,16 +118,9 @@ class DirectorBrief(pydantic.BaseModel):
     format_reasoning: str = pydantic.Field(
         description="1-2 sentence explanation of why this format best fits the product and goal"
     )
-    recommended_framework: str = pydantic.Field(
-        description="Recommended copywriting framework slug for UGC (aida, pas, fab) or 'none' for framework-free formats like lifestyle"
-    )
     target_platform: str = pydantic.Field(
         default="instagram_reels",
         description="Inferred or user-selected target platform",
-    )
-    domain: str = pydantic.Field(
-        default="general",
-        description="Product domain slug (luxury, tech, food, fashion, beauty, fitness, general)",
     )
     questions: list[DirectorQuestion] = pydantic.Field(
         description="2-3 targeted clarifying questions informed by the recommendation"
@@ -163,16 +156,9 @@ class _LLMDirectorBrief(pydantic.BaseModel):
     format_reasoning: str = pydantic.Field(
         description="1-2 sentence explanation of why this format best fits the product and goal"
     )
-    recommended_framework: str = pydantic.Field(
-        description="Recommended copywriting framework slug for UGC (aida, pas, fab) or 'none'"
-    )
     target_platform: str = pydantic.Field(
         default="instagram_reels",
         description="Inferred or user-selected target platform",
-    )
-    domain: str = pydantic.Field(
-        default="general",
-        description="Product domain slug (luxury, tech, food, fashion, beauty, fitness, general)",
     )
     questions: list[_LLMDirectorQuestion] = pydantic.Field(
         default_factory=list,
@@ -295,21 +281,9 @@ class Storyboard(pydantic.BaseModel):
     )
 
     # Script skill classifications
-    script_framework: str = pydantic.Field(
-        default="none",
-        description="Matched copywriting framework slug for UGC (aida, pas, fab) or 'none' for framework-free formats like lifestyle",
-    )
     commercial_format: str = pydantic.Field(
         default="lifestyle",
         description="Matched commercial format slug (lifestyle, ugc, ugc_legacy)",
-    )
-    emotional_trigger: str = pydantic.Field(
-        default="aspiration",
-        description="Matched emotional trigger slug (scarcity, social_proof, authority, aspiration, nostalgia, curiosity, belonging)",
-    )
-    domain: str = pydantic.Field(
-        default="general",
-        description="Matched domain slug (luxury, tech, food, fashion, beauty, fitness, general)",
     )
 
     # --- Backward compatibility ---
@@ -520,11 +494,10 @@ and recommend the best commercial format and copywriting framework for an ad vid
 You will:
 1. Analyze the product/service from the user's description and any reference images provided.
 2. Recommend ONE commercial format from the available options.
-3. Recommend ONE copywriting framework only when the format needs it. For lifestyle, set framework to 'none'.
-4. Infer the most likely target platform.
-5. Classify the product domain (fashion, beauty, food, tech, fitness, luxury, or general).
-6. Generate 2-3 targeted clarifying questions that will help you produce a better ad. \
-   Each question should have 3-4 concrete options relevant to the product and format.
+3. Infer the most likely target platform.
+4. Generate 2-3 targeted clarifying questions that will help you produce a better ad. \
+   Each question should have 3-4 concrete options relevant to the product and format. \
+   Questions MUST be specific to the user's product and request — never generic.
 
 Your questions should be informed by your format recommendation. For example:
 - For a lifestyle ad: ask about the setting, daily-use moments, and mood
@@ -538,19 +511,14 @@ DIRECTOR_USER_PROMPT = """\
 Available commercial formats:
 {format_options}
 
-Available copywriting frameworks:
-{framework_options}
-
-Use 'none' when the chosen format does not need a framework.
-
 ---
 
 User Request: "{user_query}"
 
 {image_context}
 
-Analyze this request and recommend the best format and framework. \
-Generate 2-3 clarifying questions with options. \
+Analyze this request and recommend the best format. \
+Generate 2-3 clarifying questions with options tailored to this specific product. \
 Return your response as structured JSON matching the DirectorBrief schema."""
 
 
@@ -572,9 +540,7 @@ class AdDirector:
                 product_analysis="Unable to analyze — no API key configured.",
                 recommended_format="lifestyle",
                 format_reasoning="Defaulting to lifestyle format.",
-                recommended_framework="none",
                 target_platform="instagram_reels",
-                domain="general",
                 questions=[],
             )
 
@@ -583,16 +549,12 @@ class AdDirector:
             f"  - {slug}: {label}" for slug, label in format_labels.items()
         )
 
-        frameworks = self.script_loader.skills_data.get("frameworks", {})
-        framework_options = "\n".join(f"  - {slug}" for slug in frameworks)
-
         image_context = ""
         if uploaded_images:
             image_context = f"{len(uploaded_images)} reference image(s) of the product/service are provided. Study them carefully."
 
         user_prompt = DIRECTOR_USER_PROMPT.format(
             format_options=format_options,
-            framework_options=framework_options,
             user_query=user_query,
             image_context=image_context,
         )
@@ -617,9 +579,7 @@ class AdDirector:
             product_analysis=llm_brief.product_analysis,
             recommended_format=llm_brief.recommended_format,
             format_reasoning=llm_brief.format_reasoning,
-            recommended_framework=llm_brief.recommended_framework,
             target_platform=llm_brief.target_platform,
-            domain=llm_brief.domain,
             questions=[
                 DirectorQuestion.model_validate(
                     {"question": q.question, "options": q.options}
@@ -633,7 +593,6 @@ class AdDirector:
             brief.product_analysis,
             user_query=user_query,
             uploaded_images=uploaded_images,
-            domain=brief.domain,
         )
         if structured_questions:
             brief.questions = structured_questions
@@ -653,7 +612,6 @@ class AdDirector:
         print("=" * 62)
         print(f"\n  Product Analysis:")
         print(f"    {brief.product_analysis}")
-        print(f"\n  Recommended Framework: {brief.recommended_framework}")
         print(f"  Target Platform: {brief.target_platform}")
 
         # --- Step 1: Let user choose format ---
@@ -709,7 +667,6 @@ class AdDirector:
                 brief.product_analysis,
                 user_query,
                 uploaded_images,
-                domain=brief.domain,
             )
 
         # --- Step 3: Ask clarifying questions ---
@@ -792,14 +749,19 @@ class AdDirector:
         product_analysis: str,
         user_query: str = "",
         uploaded_images: Optional[List] = None,
-        domain: str = "general",
     ) -> list[DirectorQuestion]:
-        """Generate clarifying questions tailored to a specific format."""
-        structured_questions = self.script_loader.get_question_set(format_slug, domain)
-        if structured_questions:
-            return [DirectorQuestion.model_validate(q) for q in structured_questions]
+        """Generate clarifying questions tailored to a specific format.
 
+        When template questions exist in question_controls.yaml, they are passed
+        to the LLM as a starting point. The LLM filters out any questions the
+        user already answered in their request and adapts the options to the
+        specific product. When no templates exist, the LLM generates from scratch.
+        """
         if not self.client:
+            # No LLM available — return templates as-is or empty
+            structured_questions = self.script_loader.get_question_set(format_slug)
+            if structured_questions:
+                return [DirectorQuestion.model_validate(q) for q in structured_questions]
             return []
 
         format_labels = self.script_loader.get_format_labels()
@@ -812,14 +774,32 @@ class AdDirector:
             for st in scene_types:
                 scene_desc += f"  - {st['slug']} ({st['role']}): {st['visual']}\n"
 
+        # Build template context if structured questions exist
+        template_questions = self.script_loader.get_question_set(format_slug)
+        template_block = ""
+        if template_questions:
+            template_lines = [
+                "\nHere are template questions for this format. Use these as your starting point:",
+            ]
+            for tq in template_questions:
+                template_lines.append(f"\n  Question: {tq['question']}")
+                for opt in tq.get("options", []):
+                    label = opt.get("label", "")
+                    desc = opt.get("description", "")
+                    template_lines.append(f"    - {label}: {desc}")
+            template_block = "\n".join(template_lines)
+
         prompt = (
             f'The user wants a "{format_label}" ad for this product:\n'
             f"{product_analysis}\n\n"
             f'Original request: "{user_query}"\n\n'
             f"{scene_desc}\n"
-            f"Generate 2-3 clarifying questions with 3-4 options each, "
-            f"tailored specifically to making the best possible {format_label} ad. "
-            f"Return as JSON matching the schema."
+            f"{template_block}\n\n"
+            f"IMPORTANT: If the user's original request already answers a question "
+            f"(e.g. they already mentioned where to film, or what to talk about), "
+            f"DO NOT include that question — skip it entirely.\n"
+            f"Adapt the option labels and descriptions to be specific to THIS product. "
+            f"Return 1-3 questions with 3-4 options each as JSON matching the schema."
         )
 
         class _QuestionsOnly(pydantic.BaseModel):
@@ -829,9 +809,13 @@ class AdDirector:
             result = openai_structured_call(
                 client=self.client,
                 system_prompt=(
-                    "You are a senior ad creative director. Generate 2-3 concise, "
-                    "actionable clarifying questions with 3-4 options each. "
-                    "Questions should be specific to the chosen ad format and product."
+                    "You are a senior ad creative director. You are given template questions "
+                    "and a user's ad request. Your job is to:\n"
+                    "1. DROP any question the user already answered in their request.\n"
+                    "2. ADAPT remaining questions so the options are specific to the product.\n"
+                    "3. Keep questions concise and actionable. The user is a business owner, "
+                    "not a filmmaker.\n"
+                    "Return only the questions that still need answering."
                 ),
                 user_content=prompt,
                 response_model=_QuestionsOnly,
@@ -845,6 +829,9 @@ class AdDirector:
             ]
         except Exception as e:
             print(f"    Warning: Could not generate format-specific questions: {e}")
+            # Fall back to raw templates
+            if template_questions:
+                return [DirectorQuestion.model_validate(q) for q in template_questions]
             return []
 
 
@@ -858,25 +845,53 @@ You are a practical ad storyboard planner. Build a believable, production-friend
 You will:
 1. Classify the request against the provided taxonomy (use_case, style, subject).
 2. Classify video generation settings (video_motion_type, video_camera_technique, video_style).
-3. Select the best script_framework, commercial_format, emotional_trigger, and domain for this ad. Use script_framework='none' for lifestyle and other framework-free formats. Use aida/pas/fab for UGC and ugc_legacy.
+3. Select the best commercial_format for this ad.
 4. Write a short subject_identity that stays constant across all scenes. Include only stable visual traits \
    needed for continuity. Do NOT include clothing.
 5. Write a subject_outfit describing the default product/outfit with concrete visual details.
-6. Design {{num_frames}} scenes that tell a compelling ad story following the selected format. If script_framework is not 'none', use it to shape the narration only.
+6. Design {{num_frames}} scenes that tell a compelling ad story following the selected format.
 7. Write a detailed image generation prompt for each scene. Every scene's image_prompt MUST begin with \
    the subject_identity text to lock visual consistency, followed by the outfit for that scene.
    Use the exact user-requested aspect ratio {aspect_ratio} in every scene. Ignore any conflicting template ratio.
 8. For each scene, select ONE action from the ACTIONS catalog. The action MUST be listed in the \
    scene_type's allowed_actions. Do NOT invent new actions or choreography.
-9. Write a voiceover narration script following the selected commercial format and emotional trigger. \
-   Write a narration_segment for each individual scene.
+9. Write a voiceover narration script following the selected commercial format. \
+   FIRST write the narration_script as ONE continuous flowing monologue — a single story the creator \
+   is telling, not a list of separate points. THEN split it into narration_segment per scene at natural \
+   breathing points. The segments must read as one unbroken story when concatenated.
    FOR UGC FORMATS: The narration must sound like a REAL PERSON telling a genuine personal story \
    about discovering and loving a product — NOT a marketing script. \
+   STORY FLOW RULE: The entire narration should feel like one excited person telling a friend about \
+   something they found. It must have a narrative arc — a beginning (how they found it), a middle \
+   (what they love about it), and an end (what they're going to do with it). \
+   Sentences should connect naturally with words like "and", "so", "because", "honestly", "like". \
+   Do NOT write 3 separate taglines. Write ONE continuous story split across scenes. \
+   BAD example (3 disjoint taglines): "I found this for Pongal." / "Look at this embroidery." / "I'd wear this at home." \
+   GOOD example (one flowing story): "Hii guys, I just stumbled into this beautiful green kurti today" / \
+   "I'm totally going to gift this to my sister too, just look at this embroidery" / \
+   "This is my new favourite and I'm gonna wear it everywhere from now" \
    Use first-person "I" and "my", reference real situations (a gift, an event, a friend asking, \
    a moment of surprise), and express genuine emotion (surprise, delight, relief, excitement). \
    NEVER use generic marketing phrases like "good option", "stands out", "would recommend", \
    "check it out", "grab it". Instead use vivid personal language and mini-anecdotes. \
+   TONE RULE: The user's request and director answers set the tone. If the user says "excited", \
+   write with high energy and exclamation marks. If the user says "calm", write with a relaxed, \
+   measured pace. Match the emotional register the user is asking for. \
+   OPENER RULE: Scene 1 (creator_open) should feel like the creator just hit record. \
+   The opener MAY start with a casual greeting ("Hey guys", "Okay so") OR jump straight \
+   into the topic ("So I've been using this for a week...", "This fabric though..."). \
+   Vary it — not every UGC ad needs a salutation. Pick whichever feels most natural \
+   for the tone and energy of this specific ad. \
+   EXPRESSION RULE: The creator should be expressive — smiling, eyes lighting up, laughing, \
+   nodding enthusiastically. Describe these expressions in the scene description field, \
+   NOT in narration_segment. \
+   NARRATION_SEGMENT RULE: narration_segment must contain ONLY the words the creator \
+   actually speaks out loud. No parenthetical cues like "(smiling wide)" or "(touching fabric)". \
+   Those are NOT spoken — they are visual actions that belong in the scene description. \
+   BAD: "Hey guys, I found this! (smiling wide)" \
+   GOOD: "Hey guys, I found this!" (put "smiling wide" in the description instead) \
    TIMING CONSTRAINT — a normal person speaks at roughly 2.5 words per second. \
+   For UGC format, scene 1 is 6 seconds, scenes 2+ are 8 seconds. \
    Each narration_segment MUST be short enough for a human to say comfortably within the scene duration: \
    - 6-second scene: MAX 12 words (roughly 1 short sentence) \
    - 8-second scene: MAX 17 words (1-2 short sentences) \
@@ -1109,93 +1124,12 @@ class StoryboardPlanner:
 
         return storyboard
 
-    def _build_structured_ugc_segments(
-        self, framework: str, answer_map: dict[str, str]
-    ) -> dict[str, str]:
-        highlight = answer_map.get(
-            "ugc_main_highlight", "what makes it special"
-        ).lower()
-        cta_style = answer_map.get("ugc_cta_style", "soft recommendation").lower()
-
-        cta_lines = {
-            "soft recommendation": "Honestly, now it's the only thing I want to wear to every event this season.",
-            "sale urgency": "My friend texted me saying the sale ends tomorrow, so I'm glad I didn't wait any longer.",
-            "outfit compliment angle": "Three people stopped me at the last event to ask where I got it.",
-            "direct buy-now push": "I already told my sister to get one before they sell out.",
-        }
-        cta_line = cta_lines.get(cta_style, cta_lines["soft recommendation"])
-
-        families = {
-            "aida": {
-                # ugc_legacy scene types
-                "creator_hook": f"My mom sent me this and I almost didn't try it on because I thought {highlight} would be too much.",
-                "product_reveal": f"But the second I put it on I realized {highlight} makes it all the more festive.",
-                "product_demo": "It just falls so nicely and feels like something you actually want to keep wearing.",
-                "creator_cta": cta_line,
-                # new ugc scene types
-                "creator_open": f"My mom sent me this and I almost didn't try it on because I thought {highlight} would be too much.",
-                "creator_body": f"But the second I put it on I realized {highlight} makes it all the more festive. It just falls so nicely.",
-                "creator_close": cta_line,
-            },
-            "pas": {
-                "creator_hook": "I always struggle to find something festive that doesn't feel like I'm trying too hard.",
-                "product_reveal": f"This one just solved it because {highlight} gives it that dressed-up feel instantly.",
-                "product_demo": "And it's so comfortable I forgot I was wearing something festive until someone complimented me.",
-                "creator_cta": cta_line,
-                "creator_open": "I always struggle to find something festive that doesn't feel like I'm trying too hard.",
-                "creator_body": f"This one just solved it because {highlight} gives it that dressed-up feel. And it's actually comfortable.",
-                "creator_close": cta_line,
-            },
-            "fab": {
-                "creator_hook": f"When I first saw {highlight} I wasn't sure if it would work on me.",
-                "product_reveal": "But it actually gives the whole outfit this elevated festive look without being over the top.",
-                "product_demo": "The moment I wore it out, I felt put together with zero effort.",
-                "creator_cta": cta_line,
-                "creator_open": f"When I first saw {highlight} I wasn't sure if it would work on me.",
-                "creator_body": "But it actually gives the whole outfit this elevated festive look. I felt put together with zero effort.",
-                "creator_close": cta_line,
-            },
-        }
-        return families.get(framework, families["aida"])
-
     def _apply_structured_ugc_controls(
         self,
         storyboard: Storyboard,
         controls: dict[str, Any],
-        director_brief: Optional[DirectorBrief],
     ) -> Storyboard:
-        storyboard = self._apply_structured_scene_controls(storyboard, controls)
-
-        answer_map = {
-            item["question_id"]: item["answer"] for item in controls.get("selected", [])
-        }
-        framework = controls.get("shared", {}).get("framework") or (
-            director_brief.recommended_framework
-            if director_brief
-            else storyboard.script_framework
-        )
-        framework = framework if framework in {"aida", "pas", "fab"} else "aida"
-        storyboard.script_framework = framework
-
-        # New UGC: do NOT stamp hardcoded narration templates.
-        # The LLM planner already generated narration from the user query;
-        # GPT 5.4 will refine it during the video generation phase.
-        # Only apply templates for ugc_legacy which relies on them.
-        if storyboard.commercial_format == "ugc":
-            return storyboard
-
-        segments = self._build_structured_ugc_segments(framework, answer_map)
-        for scene in storyboard.scenes:
-            line = segments.get(scene.scene_type)
-            if line:
-                scene.narration_segment = line
-
-        storyboard.narration_script = " ".join(
-            scene.narration_segment.strip()
-            for scene in storyboard.scenes
-            if scene.narration_segment.strip()
-        )
-        return storyboard
+        return self._apply_structured_scene_controls(storyboard, controls)
 
     def plan(
         self,
@@ -1215,7 +1149,6 @@ class StoryboardPlanner:
         if director_brief:
             scene_types = self.script_loader.get_format_scene_types(
                 director_brief.recommended_format,
-                domain=director_brief.domain,
             )
             if scene_types:
                 num_frames = len(scene_types)
@@ -1247,7 +1180,6 @@ class StoryboardPlanner:
                 "\n\nDIRECTOR BRIEF (you MUST follow these constraints):",
                 f"Product: {director_brief.product_analysis}",
                 f"Format: {director_brief.recommended_format} (LOCKED — use this format's scene structure exactly)",
-                f"Framework: {director_brief.recommended_framework} (LOCKED — use this for narration only when not 'none')",
                 f"Target Platform: {director_brief.target_platform}",
             ]
             if director_brief.user_answers and director_brief.questions:
@@ -1272,12 +1204,6 @@ class StoryboardPlanner:
                         f"video_style={vh.get('style', '')}"
                     )
                 constraint_lines.append(f'  → Set scene_type="{st["slug"]}"')
-                # Show primary motion category for this scene type
-                primary_cat = st.get("primary_category", "")
-                if primary_cat:
-                    constraint_lines.append(
-                        f"  → Primary motion category: {primary_cat} (pick from this category first)"
-                    )
                 # Show allowed actions for this scene type
                 allowed = st.get("allowed_actions", [])
                 if allowed:
@@ -1336,10 +1262,9 @@ class StoryboardPlanner:
             temperature=0.7,
         )
 
-        # If director brief was used, lock the format and framework
+        # If director brief was used, lock the format
         if director_brief:
             storyboard.commercial_format = director_brief.recommended_format
-            storyboard.script_framework = director_brief.recommended_framework
 
         storyboard.aspect_ratio = aspect_ratio
 
@@ -1354,17 +1279,9 @@ class StoryboardPlanner:
         else:
             storyboard = self._finalize_storyboard(storyboard, aspect_ratio)
 
-        if storyboard.commercial_format == "lifestyle" and selected_controls.get(
-            "scenes"
-        ):
+        if selected_controls.get("scenes") or selected_controls.get("selected"):
             storyboard = self._apply_structured_scene_controls(
                 storyboard, selected_controls
-            )
-        elif storyboard.commercial_format in ("ugc", "ugc_legacy") and selected_controls.get(
-            "selected"
-        ):
-            storyboard = self._apply_structured_ugc_controls(
-                storyboard, selected_controls, director_brief
             )
 
         storyboard = self._normalize_scene_durations(storyboard, duration)
@@ -1434,10 +1351,13 @@ class StoryboardPlanner:
                     "wave_hello",
                 }:
                     baseline = max(4.0, baseline)
-                # New UGC uses Veo extension chaining — snap to Veo durations (4, 6, 8)
+                # New UGC uses Veo extension chaining — scene 1 = 6s (image-to-video),
+                # scenes 2+ = 8s (extensions). Match the actual Veo durations.
                 if format_slug == "ugc":
-                    baseline = max(8.0, baseline)
-                    scene.duration_hint = 8.0
+                    if scene.scene_number == 1:
+                        scene.duration_hint = 6.0
+                    else:
+                        scene.duration_hint = 8.0
                 else:
                     scene.duration_hint = round(min(5.0, max(3.5, baseline)), 1)
             else:
@@ -1484,6 +1404,52 @@ class StoryboardPlanner:
             storyboard.video_prompt, aspect_ratio
         )
         return storyboard
+
+    _UGC_POSE_SYSTEM = (
+        "You are a photo director for UGC (user-generated content) influencer ads. "
+        "Given the opening narration line a creator will speak to camera, describe the "
+        "EXACT body pose, hand position, facial expression, and posture for the keyframe "
+        "photo. The pose must match the ENERGY and INTENT of what the creator is about to say.\n\n"
+        "Rules:\n"
+        "- If the narration starts with an excited greeting or exclamation (\"Hey guys!\", "
+        "\"OMG you have to see this!\"), the creator should have active, open body language — "
+        "a wave, hands gesturing outward, leaning forward with energy.\n"
+        "- If the narration starts conversationally or reflectively (\"So I've been using this...\", "
+        "\"Okay let me tell you about...\"), the creator should be relaxed and neutral — "
+        "hands resting naturally, casual posture, calm expression, maybe holding both hands "
+        "together or one hand resting on the other arm.\n"
+        "- If the narration involves showing a product, the creator should be holding or "
+        "interacting with the product naturally.\n"
+        "- NEVER use the words 'right hand' or 'left hand' — say 'one hand', 'raised hand', etc.\n"
+        "- Keep it to 1-2 sentences describing the pose only. No preamble."
+    )
+
+    def _infer_ugc_pose_from_script(self, scene: StoryboardScene) -> str:
+        """Use GPT to infer the right keyframe pose from the scene's narration."""
+        narration = scene.narration_segment or scene.description
+        if not narration or not self.client:
+            return ""
+
+        try:
+            response = self.client.chat.completions.create(
+                model=STORYBOARD_MODEL,
+                messages=[
+                    {"role": "system", "content": self._UGC_POSE_SYSTEM},
+                    {
+                        "role": "user",
+                        "content": f"The creator's opening line is: \"{narration}\"\n\n"
+                        "Describe the body pose for the keyframe photo.",
+                    },
+                ],
+                temperature=0.4,
+                max_tokens=150,
+            )
+            pose = response.choices[0].message.content.strip()
+            print(f"    UGC pose (from script): {pose[:100]}...")
+            return pose
+        except Exception as e:
+            print(f"    Warning: UGC pose inference failed: {e}")
+            return ""
 
     def _enhance_with_templates(
         self, storyboard: Storyboard, template_hints: str, aspect_ratio: str
@@ -1537,8 +1503,16 @@ class StoryboardPlanner:
                     camera_hint,
                 )
 
-            # Inject pose from action's starting_pose via the poses catalog
-            if scene.action:
+            # Inject pose: for UGC, infer from narration script; otherwise use action→pose catalog
+            if storyboard.commercial_format == "ugc":
+                inferred_pose = self._infer_ugc_pose_from_script(scene)
+                if inferred_pose:
+                    scene.image_prompt = self._append_tagged_detail(
+                        scene.image_prompt,
+                        "### Pose:",
+                        inferred_pose,
+                    )
+            elif scene.action:
                 action_entry = self.catalog.get("actions", {}).get(scene.action)
                 if action_entry:
                     starting_pose_slug = action_entry.get("starting_pose", "")
@@ -1594,8 +1568,5 @@ class StoryboardPlanner:
             video_motion_type="cinematic",
             video_camera_technique="dolly_in",
             video_style="cinematic_video",
-            script_framework="none",
             commercial_format="lifestyle",
-            emotional_trigger="aspiration",
-            domain="general",
         )
