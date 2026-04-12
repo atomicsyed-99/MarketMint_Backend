@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+
+node_modules/
+.mastra/
+
+app/test-assets
+
+# ENVs
+.env*
+.DS_Store*
+uv.lock
+
+keys/
+venv/
+
+
+.trigger

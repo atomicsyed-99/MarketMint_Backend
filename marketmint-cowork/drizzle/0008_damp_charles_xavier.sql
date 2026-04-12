@@ -1,0 +1,1 @@
+ALTER TABLE "agent_job_runs" ADD COLUMN "error_code" text;

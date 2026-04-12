@@ -1,0 +1,1 @@
+ALTER TABLE "agent_configs" DROP CONSTRAINT "agent_configs_key_unique";

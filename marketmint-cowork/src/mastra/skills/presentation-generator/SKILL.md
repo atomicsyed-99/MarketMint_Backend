@@ -1,0 +1,166 @@
+---
+name: presentation-generator
+description: Use when the user asks for a presentation, pitch deck, slide deck, PPT, or PPTX. Creates structured PowerPoint files with professional layouts, AI-generated images, and downloadable .pptx output.
+---
+
+# Presentation Generator
+
+Create professional PowerPoint presentations (.pptx) with structured slide layouts, brand-aware design, and optional AI-generated images. Produces downloadable files in standard 16:9 widescreen format.
+
+## When to Use
+
+ALWAYS use this skill when:
+- User asks for a "presentation", "pitch deck", "slide deck", "PPT", "PPTX", "slides"
+- User wants to create a visual summary of data, strategy, or plan in slide format
+- User asks to "present this as slides" or "turn this into a deck"
+
+Do NOT use when:
+- User wants a dashboard or chart → use `html` skill
+- User wants a document or report → use `deliverContent` with `kind: "markdown"`
+- User wants a single infographic → use `product-infographic` or `creative-generation` skill
+
+## Mandatory Workflow
+
+Follow these steps in order:
+
+### Step 1: Gather Context
+
+Before creating any slides, understand:
+1. **Topic**: What is the presentation about?
+2. **Audience**: Who will view it? (executives, team, investors, customers)
+3. **Purpose**: Inform, persuade, teach, or pitch?
+4. **Slide count**: User preference, or auto (aim for 8-15 slides)
+5. **Brand**: Use conversation and brief; slide images from `directImageGen` apply saved workspace brand memory automatically when available
+
+If the user's request is clear enough (e.g., "create a 10-slide pitch deck for our Q4 results"), proceed without asking clarification questions.
+
+### Step 2: Plan the Outline
+
+Present a brief outline using `displayPlan` with the slide structure:
+- List each slide's title and layout type
+- Keep it to one line per slide
+- Get user approval before generating
+
+Example plan format:
+```
+- Title slide: "Q4 2026 Performance Review"
+- Content slide: Key metrics overview
+- Image slide: Product highlight with generated image
+- Two-column slide: Revenue vs. Costs
+- Content slide: Customer growth highlights
+- Comparison slide: Q3 vs Q4
+- Content slide: Challenges and learnings
+- Content slide: Q1 2027 priorities
+- Title slide: "Thank You / Questions"
+```
+
+### Step 3: Generate Images (if needed)
+
+If any slides need AI-generated images:
+1. Call `directImageGen` FIRST with appropriate prompts
+2. Request images at 16:9 aspect ratio for best slide fit
+3. Collect the resulting CDN URLs
+4. Pass these URLs to the presentation tool in Step 4
+
+Do NOT generate images inside the presentation tool — generate them separately first.
+
+### Step 4: Generate Presentation
+
+Call `generatePresentation` with structured slide data. The tool accepts these layout types:
+
+| Layout | Use For | Fields |
+|--------|---------|--------|
+| `title` | Opening and closing slides | title, subtitle |
+| `content` | Key points, findings, lists | title, bullets (1-5), optional imageUrl |
+| `image` | Hero images, product shots | title, imageUrl, optional caption |
+| `two-column` | Side-by-side comparisons | title, leftContent, rightContent |
+| `comparison` | Labeled comparisons (vs., before/after) | title, leftHeader, leftContent, rightHeader, rightContent |
+
+## Content Quality Rules (CRITICAL)
+
+These rules prevent the most common LLM presentation mistakes:
+
+### Word Limits
+- **Slide titles**: Max 6 words, action-oriented. "Revenue Grew 23% in Q4" not "A Summary of Our Revenue Performance in the Fourth Quarter"
+- **Bullet points**: Max 15 words each. Be specific and concrete.
+- **Bullets per slide**: 3-5 maximum. If you have more, split into two slides.
+- **Subtitles**: Max 10 words.
+- **Captions**: Max 12 words.
+
+### Content Must Be Concrete
+- WRONG: "This section covers our growth strategy"
+- RIGHT: "Expand to 3 new markets by Q2"
+- WRONG: "Revenue showed positive trends"
+- RIGHT: "Revenue up 23% YoY to $4.2M"
+
+Every bullet point must contain a specific fact, number, action, or insight. No meta-descriptions of what the slide is about.
+
+### Slide Variety
+- Do NOT make every slide a content slide with bullets
+- Mix at least 3 different layout types in a deck
+- Use image slides for visual impact between text-heavy slides
+- Start with a title slide, end with a title slide (closing/CTA)
+- For 10+ slide decks, use at least one two-column or comparison slide
+
+### Narrative Structure
+- **Opening 20%**: Title + context/problem
+- **Core 60%**: Key points, data, evidence, visuals
+- **Closing 20%**: Summary, next steps, CTA
+- Each slide must have ONE main takeaway — if you can't state it in one sentence, split the slide
+- The audience should follow the logic slide by slide without going back
+
+### Image Prompts (when generating images for slides)
+- Be specific: "A modern open-plan office with natural lighting, team collaborating at a whiteboard, professional photography style"
+- NOT: "An image related to teamwork"
+- Exclude text, charts, or graphs from image prompts — those are generated by pptxgenjs natively
+- Always request 16:9 aspect ratio for slide images
+
+## Error Recovery
+
+If `generatePresentation` fails:
+1. Inform the user: "Presentation generation failed. Let me provide the content in an alternative format."
+2. Offer to deliver the slide content as a markdown document via `deliverContent` (kind: "markdown") as a fallback.
+3. Do NOT retry more than once without user confirmation.
+
+If image generation fails before presentation creation:
+1. Proceed with the presentation WITHOUT images — use content-only and two-column layouts instead of image layouts.
+2. Inform the user that images couldn't be generated and offer to add them later.
+
+## Output
+
+The tool generates a downloadable .pptx file displayed in the artifact panel with:
+- File name derived from presentation title
+- Slide count badge
+- Download button
+
+After generation, provide a brief summary (1-2 sentences) of what was created. Do NOT list every slide's content — the user can download and review.
+
+## Example
+
+User: "Create a pitch deck for our AI photo editing startup targeting investors"
+
+Agent workflow:
+1. Present outline via `displayPlan`:
+   ```
+   - Title slide: "PhotoAI — The Future of Visual Content"
+   - Content slide: Problem — manual editing takes hours
+   - Content slide: Solution — AI-powered one-click editing
+   - Image slide: Product demo with generated screenshot
+   - Content slide: Market size and opportunity
+   - Two-column slide: Business model (B2C vs B2B)
+   - Content slide: Traction and metrics
+   - Comparison slide: Us vs. competitors
+   - Content slide: Team and advisors
+   - Content slide: Fundraising ask and use of funds
+   - Title slide: "Let's Build the Future Together"
+   ```
+2. Generate 1-2 hero images via `directImageGen` at 16:9 (workspace brand memory applies inside the tool when available)
+3. Call `generatePresentation` with all slide data + image URLs
+4. Brief summary: "Created an 11-slide investor pitch deck for PhotoAI. Download the .pptx from the artifact panel."
+
+## Related Skills
+
+- **creative-generation**: For generating images to use in slides
+- **creative-director**: For brand-aware creative direction before generating slide images
+- **html**: For interactive dashboards (use instead of presentation for live data)
+- **copywriting**: For landing page copy (use instead of presentation for web copy)
